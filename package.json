@@ -1,0 +1,16 @@
+{
+  "name": "csg-web",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Sitio web de CSG — Construcciones y Soluciones Globales",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.5"
+  }
+}

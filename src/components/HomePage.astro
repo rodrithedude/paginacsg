@@ -1,0 +1,399 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import Photo from './Photo.astro';
+import site from '../data/site.json';
+import services from '../data/services.json';
+import projects from '../data/projects.json';
+import clients from '../data/clients.json';
+import { heroImage, secondaryPhoto, photoByFile } from '../lib/media';
+import { navFor } from '../lib/nav';
+import { anchors, formatDuration, routes, t, yearsSince, foundingYear, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const ids = anchors[lang];
+const nav = navFor(lang, 'home');
+const projectsUrl = routes.projects[lang];
+const params = lang === 'es' ? { svc: 'servicio', client: 'cliente' } : { svc: 'service', client: 'client' };
+
+const years = yearsSince(site.foundingDate);
+const countFor = (id: string) => projects.filter((p) => p.cats.includes(id)).length;
+const clientOf = (id: string) => clients.find((c) => c.id === id);
+const svcShort = (id: string) => services.find((x) => x.id === id)?.[lang].short ?? id;
+
+type Project = (typeof projects)[number] & { featured?: number; photo?: string; unit?: string };
+const featured = (projects as Project[])
+  .filter((p) => typeof p.featured === 'number')
+  .sort((a, b) => (a.featured ?? 0) - (b.featured ?? 0));
+
+const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
+  id: sec,
+  label: s.clients.sectors[sec],
+  items: clients.filter((c) => c.sector === sec),
+}));
+
+const teamPhoto = secondaryPhoto(0);
+const ctaPhoto = secondaryPhoto(1);
+---
+<!-- ============ PORTADA ============ -->
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <div class="hero__header">
+    <a class="hero__brand" href="#inicio" aria-label={`${site.brand} — ${site.name}`}>
+      <Logo height={110} />
+    </a>
+    <button class="btn btn--orange btn-menu hero__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+      {s.nav.menu} <span class="btn-menu__lines" aria-hidden="true"></span>
+    </button>
+    <div class="hero__right">
+      <a class="btn btn--light hero__lang" href={nav.lang.href} hreflang={nav.lang.other} lang={nav.lang.other} aria-label={nav.lang.aria}>
+        {nav.lang.short}
+      </a>
+      <a class="btn btn--light hero__contact" href={`#${ids.contact}`}>
+        {s.nav.contact} <Icon name="arrow" class="btn__icon" />
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__media media">
+    <Photo
+      src={heroImage}
+      alt={s.hero.photoAlt}
+      widths={[800, 1280, 1920, 2400]}
+      sizes="100vw"
+      loading="eager"
+      label={heroImage ? undefined : s.hero.photoLabel}
+    />
+  </div>
+  <div class="hero__rule-h" aria-hidden="true"></div>
+  <div class="hero__rule-v" aria-hidden="true"></div>
+
+  <div class="hero__intro">
+    <h1 class="display hero__title" id="hero-title" data-reveal>{s.hero.title}</h1>
+    <div class="hero__foot">
+      <p class="mono hero__lead" data-reveal>{s.hero.lead}</p>
+      <a class="btn btn--dark" href={projectsUrl}>{s.hero.cta} <Icon name="arrow" class="btn__icon" /></a>
+    </div>
+  </div>
+
+  <div class="hero__panel" aria-hidden="true"></div>
+  <div class="hero__meta label">
+    <span>{site.address.city}, {site.address.countryCode}</span>
+    <span>{s.hero.since(foundingYear)}</span>
+  </div>
+  <div class="hero__aside">
+    <p class="mono hero__note" data-reveal>{s.hero.note}</p>
+    <span class="label hero__code" aria-hidden="true">{s.hero.code}</span>
+  </div>
+</section>
+
+<!-- ============ CIFRAS Y NOSOTROS ============ -->
+<section class="about" id={ids.about} aria-labelledby="about-title">
+  <div class="stats" role="list" aria-label={s.stats.aria}>
+    <div class="stat cut" role="listitem" data-reveal>
+      <p class="stat__num"><span data-years-since={site.foundingDate} data-count={years}>{years}</span></p>
+      <p class="stat__label mono">{s.stats.years}</p>
+    </div>
+    <div class="stat cut" role="listitem" data-reveal>
+      <p class="stat__num"><span data-count={site.stats.projects}>{site.stats.projects}</span><em>+</em></p>
+      <p class="stat__label mono">{s.stats.projects}</p>
+    </div>
+    <div class="stat cut" role="listitem" data-reveal>
+      <p class="stat__num"><span data-count={site.stats.employees}>{site.stats.employees}</span><em>+</em></p>
+      <p class="stat__label mono">{s.stats.employees}</p>
+    </div>
+    <div class="stat cut" role="listitem" data-reveal>
+      <p class="stat__num">{foundingYear}</p>
+      <p class="stat__label mono">{s.stats.founded}</p>
+    </div>
+  </div>
+
+  <div class="about__panel" data-reveal>
+    <div>
+      <p class="label kicker">{s.about.eyebrow}</p>
+      <h2 class="display about__title" id="about-title">{s.about.title}</h2>
+    </div>
+    <p class="mono about__text">{s.about.p1}</p>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="services step-top" id={ids.services} aria-labelledby="services-title">
+  <div class="services__head">
+    <div class="services__intro">
+      <p class="label kicker">{s.services.eyebrow}</p>
+      <h2 class="display section-title" id="services-title" data-reveal>{s.services.title}</h2>
+    </div>
+    <p class="mono services__lead" data-reveal>{s.services.lead}</p>
+  </div>
+  <div class="services__grid">
+    {
+      services.map((svc, i) => {
+        const n = countFor(svc.id);
+        const copy = svc[lang];
+        return (
+          <article class="svc" data-reveal>
+            <div class="svc__card cut gridpaper">
+              <header class="svc__head">
+                <h3 class="svc__title">{copy.title}</h3>
+                <span class="svc__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              </header>
+              <Icon name={svc.icon} class="svc__icon" />
+            </div>
+            <div class="svc__desc mono cut">
+              <p>{copy.desc}</p>
+              {n > 0 ? (
+                <a class="link-arrow" href={`${projectsUrl}?${params.svc}=${svc.id}`}>
+                  {s.services.seeProjects(n)} <Icon name="arrow" />
+                </a>
+              ) : (
+                <a class="link-arrow" href={`#${ids.contact}`}>
+                  {s.services.noProjects} <Icon name="arrow" />
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })
+    }
+    <article class="svc svc--cta" data-reveal>
+      <div class="svc__card cut gridpaper">
+        <header class="svc__head">
+          <h3 class="svc__title">{s.services.ctaTitle}</h3>
+          <span class="svc__num" aria-hidden="true">+</span>
+        </header>
+        <Icon name="contact" class="svc__icon" />
+      </div>
+      <div class="svc__desc mono cut">
+        <p>{s.services.ctaText}</p>
+        <a class="link-arrow" href={`#${ids.contact}`}>{s.cta.button} <Icon name="arrow" /></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ CÓMO TRABAJAMOS ============ -->
+<section class="principles" aria-labelledby="principles-title">
+  <div class="principles__intro">
+    <p class="label kicker">{s.principles.eyebrow}</p>
+    <h2 class="display section-title" id="principles-title" data-reveal>{s.principles.title}</h2>
+  </div>
+  <div class="principles__list" data-accordion>
+    {
+      s.principles.items.map((item, i) => (
+        <div class:list={['acc', { 'is-open': i === 0 }]}>
+          <h3 class="acc__heading">
+            <button
+              class="acc__btn"
+              type="button"
+              id={`acc-${i}-btn`}
+              aria-expanded={i === 0 ? 'true' : 'false'}
+              aria-controls={`acc-${i}`}
+            >
+              <span>{item.title}</span>
+              <span class="acc__icon" aria-hidden="true" />
+            </button>
+          </h3>
+          <div class="acc__panel" id={`acc-${i}`} role="region" aria-labelledby={`acc-${i}-btn`}>
+            <div class="acc__body">
+              <div class="acc__content">
+                <p class="mono">{item.text}</p>
+                {i === 0 && (
+                  <figure class="acc__media media">
+                    <Photo
+                      src={teamPhoto?.src}
+                      alt={teamPhoto?.caption?.[lang] ?? s.principles.photoAlt}
+                      widths={[320, 480]}
+                      sizes="240px"
+                      label={teamPhoto ? undefined : s.work.photoPending}
+                    />
+                  </figure>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<!-- ============ PROYECTOS DESTACADOS ============ -->
+<section class="work" id={ids.work} aria-labelledby="work-title" data-carousel>
+  <div class="work__head">
+    <div>
+      <p class="label kicker">{s.work.eyebrow}</p>
+      <h2 class="display section-title" id="work-title" data-reveal>{s.work.title}</h2>
+      <p class="mono work__lead">{s.work.lead}</p>
+    </div>
+    <a class="btn btn--orange" href={projectsUrl}>{s.work.all(projects.length)} <Icon name="arrow" class="btn__icon" /></a>
+  </div>
+
+  <div class="work__track" data-carousel-track tabindex="0" role="region" aria-label={s.work.track}>
+    {
+      featured.map((p) => {
+        const client = clientOf(p.client);
+        const name = client?.name ?? p.client;
+        const photo = photoByFile(p.photo);
+        return (
+          <article class="fcard">
+            <div class="fcard__media media">
+              <Photo
+                src={photo?.src}
+                alt={photo?.caption?.[lang] ?? p[lang]}
+                sizes="(min-width: 860px) 40vw, 84vw"
+                label={photo ? undefined : s.work.photoPending}
+              />
+              <span class="tag fcard__tag">{svcShort(p.cats[0])}</span>
+              <p class="fcard__client">{name}</p>
+              <a class="fcard__more" href={`${projectsUrl}?${params.client}=${p.client}`} aria-label={s.work.more(name)}>
+                <Icon name="plus" />
+              </a>
+            </div>
+            <div class="fcard__body">
+              <h3 class="fcard__title">{p[lang]}</h3>
+              <p class="fcard__meta label">
+                <span>{formatDuration(p.months, lang)}</span>
+                {p.cats.map((c) => <span>· {svcShort(c)}</span>)}
+              </p>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+
+  <div class="work__controls">
+    <button class="sq-btn" type="button" data-carousel-prev aria-label={s.work.prev}><Icon name="arrow-left" /></button>
+    <button class="sq-btn" type="button" data-carousel-next aria-label={s.work.next}><Icon name="arrow" /></button>
+  </div>
+</section>
+
+<!-- ============ CLIENTES ============ -->
+<section class="clients" id={ids.clients} aria-labelledby="clients-title">
+  <div class="clients__intro">
+    <div>
+      <p class="label kicker">{s.clients.eyebrow}</p>
+      <h2 class="display section-title" id="clients-title" data-reveal>{s.clients.title}</h2>
+    </div>
+    <p class="mono">{s.clients.lead(clients.length)}</p>
+    <a class="btn btn--dark" href={routes.clients[lang]}>{s.clients.all} <Icon name="arrow" class="btn__icon" /></a>
+  </div>
+  <div class="clients__cols">
+    {
+      sectors.map((g) => (
+        <div data-reveal>
+          <h3 class="label clients__sector">
+            {g.label} <small>{String(g.items.length).padStart(2, '0')}</small>
+          </h3>
+          <ul class="clients__list">
+            {g.items.map((c) => (
+              <li title={'full' in c ? c.full : undefined}>{c.name}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<!-- ============ LLAMADO A LA ACCIÓN ============ -->
+<section class="cta" aria-labelledby="cta-title">
+  <div class="cta__media media">
+    <Photo src={ctaPhoto?.src} alt="" widths={[800, 1280, 1920]} sizes="100vw" tone="dark" />
+  </div>
+  <div class="cta__rule-h" aria-hidden="true"></div>
+  <div class="cta__rule-v" aria-hidden="true"></div>
+  <p class="cta__kicker display" data-reveal>{s.cta.kicker}</p>
+  <div class="cta__main">
+    <h2 class="display cta__title" id="cta-title" data-reveal>{s.cta.title}</h2>
+    <a class="btn btn--orange" href={`#${ids.contact}`}>{s.cta.button} <Icon name="arrow" class="btn__icon" /></a>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contact step-top" id={ids.contact} aria-labelledby="contact-title">
+  <div class="contact__intro">
+    <p class="label kicker">{s.contact.eyebrow}</p>
+    <h2 class="display section-title" id="contact-title" data-reveal>{s.contact.title}</h2>
+    <p class="mono contact__lead">{s.contact.lead}</p>
+
+    <dl class="contact__list">
+      <div>
+        <dt class="label">{s.contact.phone}</dt>
+        <dd class="mono"><a href={site.phoneHref}>{site.phone}</a></dd>
+      </div>
+      <div>
+        <dt class="label">{s.contact.email}</dt>
+        <dd class="mono"><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+      </div>
+      <div>
+        <dt class="label">{s.contact.office}</dt>
+        <dd class="mono">
+          {site.address.street}<br />{site.address.city}, {site.address.country}<br />
+          <a class="link-arrow" href={site.mapsUrl} target="_blank" rel="noopener">{s.contact.map} <Icon name="external" /></a>
+        </dd>
+      </div>
+    </dl>
+
+    <aside class="jobs" aria-labelledby="jobs-title">
+      <h3 class="label" id="jobs-title">{s.contact.jobsTitle}</h3>
+      <ul class="mono">
+        <li>{s.contact.jobsField}</li>
+        <li>{s.contact.jobsOffice} <a href={`mailto:${site.jobsEmail}`}>{site.jobsEmail}</a>.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <form
+    class="form cut-lg gridpaper"
+    data-contact-form
+    data-email={site.email}
+    data-subject={s.form.subject}
+    data-msg-required={s.form.required}
+    data-msg-opening={s.form.opening}
+    data-labels={JSON.stringify(s.form.labels)}
+    novalidate
+  >
+    <div class="form__head">
+      <p class="label">{s.form.title}</p>
+      <span class="label form__code" aria-hidden="true">F-01</span>
+    </div>
+    <div class="form__grid">
+      <label class="field">
+        <span class="field__label label">{s.form.name} *</span>
+        <input name="nombre" type="text" autocomplete="name" required />
+      </label>
+      <label class="field">
+        <span class="field__label label">{s.form.company}</span>
+        <input name="empresa" type="text" autocomplete="organization" />
+      </label>
+      <label class="field">
+        <span class="field__label label">{s.form.email} *</span>
+        <input name="correo" type="email" autocomplete="email" required />
+      </label>
+      <label class="field">
+        <span class="field__label label">{s.form.phone}</span>
+        <input name="telefono" type="tel" autocomplete="tel" />
+      </label>
+      <label class="field field--full">
+        <span class="field__label label">{s.form.type}</span>
+        <select name="tipo">
+          {services.map((svc) => <option>{svc[lang].title}</option>)}
+          <option>{s.form.other}</option>
+        </select>
+      </label>
+      <label class="field field--full">
+        <span class="field__label label">{s.form.message} *</span>
+        <textarea name="mensaje" rows="4" required></textarea>
+      </label>
+    </div>
+    <div class="form__foot">
+      <p class="mono form__status" data-form-status role="status" aria-live="polite"></p>
+      <button class="btn btn--orange btn--lg" type="submit">{s.form.submit} <Icon name="arrow" class="btn__icon" /></button>
+    </div>
+  </form>
+</section>

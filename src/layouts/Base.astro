@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+
+import Menu from '../components/Menu.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+import { routes, t, type Lang, type PageKey } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+  title: string;
+  description: string;
+  jsonLd?: boolean;
+}
+const { lang, page, title, description, jsonLd = false } = Astro.props;
+const s = t(lang);
+const siteUrl = Astro.site ?? new URL('https://www.padico.com');
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const alternates =
+  page === 'notFound'
+    ? []
+    : [
+        { hreflang: 'es', href: new URL(routes[page].es, siteUrl).href },
+        { hreflang: 'en', href: new URL(routes[page].en, siteUrl).href },
+        { hreflang: 'x-default', href: new URL(routes[page].es, siteUrl).href },
+      ];
+const ogImage = new URL('/og.png', siteUrl).href;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  name: site.brand,
+  legalName: site.legalName,
+  alternateName: site.name,
+  url: new URL('/', siteUrl).href,
+  image: ogImage,
+  logo: new URL('/apple-touch-icon.png', siteUrl).href,
+  foundingDate: site.foundingDate,
+  email: site.email,
+  telephone: site.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressCountry: site.address.countryCode,
+  },
+  areaServed: { '@type': 'Country', name: 'Guatemala' },
+  numberOfEmployees: { '@type': 'QuantitativeValue', minValue: site.stats.employees },
+};
+---
+<!doctype html>
+<html lang={lang === 'es' ? 'es-GT' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {page !== 'notFound' && <link rel="canonical" href={canonical} />}
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <meta name="theme-color" content="#E7553D" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/chakra-petch-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_GT' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {page === 'notFound' && <meta name="robots" content="noindex" />}
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(org)}></script>}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body data-page={page}>
+    <!-- Logotipo CSG (se reutiliza en encabezado, menú y pie) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="logo-csg" viewBox="0 0 348 120">
+        <path d="M26 0H100V24H36L24 36V84L36 96H100V120H26L0 94V26Z" />
+        <path transform="translate(124 0)" d="M26 0H100V24H36L24 36V48H74L100 74V94L74 120H0V96H64L76 84V72H26L0 46V26Z" />
+        <path transform="translate(248 0)" d="M26 0H74L100 26V36H76L64 24H36L24 36V84L36 96H64L76 84V78H52V56H100V94L74 120H26L0 94V26Z" />
+      </symbol>
+    </svg>
+
+    <a class="skip-link" href="#contenido">{s.skip}</a>
+    <Menu lang={lang} page={page} />
+    <div class="page">
+      <main id="contenido">
+        <slot />
+      </main>
+      <Footer lang={lang} page={page} />
+    </div>
+
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

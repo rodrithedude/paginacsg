@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import { logo } from '../lib/media';
+
+interface Props {
+  class?: string;
+  /** Altura en px del logo cuando es una imagen subida (src/assets/logo.*). */
+  height?: number;
+}
+const { class: cls = '', height = 80 } = Astro.props;
+---
+{
+  logo ? (
+    <Image src={logo} alt="" height={height} loading="eager" class={`logo logo--img ${cls}`} />
+  ) : (
+    <svg class={`logo ${cls}`} viewBox="0 0 348 120" aria-hidden="true">
+      <use href="#logo-csg" />
+    </svg>
+  )
+}

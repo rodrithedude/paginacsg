@@ -1,0 +1,259 @@
+---
+import Icon from './Icon.astro';
+import services from '../data/services.json';
+import projects from '../data/projects.json';
+import clients from '../data/clients.json';
+import { formatDuration, routes, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const P = s.projectsPage;
+
+type Project = (typeof projects)[number] & { unit?: string };
+
+const sectorOf = (clientId: string) => clients.find((c) => c.id === clientId)?.sector ?? '';
+const nSector = (sec: string) => projects.filter((p) => sectorOf(p.client) === sec).length;
+const svcWithCount = services
+  .map((svc) => ({ ...svc, n: projects.filter((p) => p.cats.includes(svc.id)).length }))
+  .filter((svc) => svc.n > 0);
+const sectors = (['publico', 'municipal', 'privado'] as const).map((id) => ({
+  id,
+  label: s.clients.sectors[id],
+  n: nSector(id),
+}));
+
+// Orden: proyectos más largos primero (suelen ser los de mayor envergadura).
+const sorted = [...(projects as Project[])].sort((a, b) => b.months - a.months || a.id - b.id);
+const clientNames = Object.fromEntries(clients.map((c) => [c.id, c.name]));
+const params = lang === 'es' ? { svc: 'servicio', client: 'cliente' } : { svc: 'service', client: 'client' };
+
+// Texto normalizado (sin tildes) para el buscador.
+const norm = (x: string) =>
+  x
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase();
+const rows = sorted.map((p) => {
+  const client = clients.find((c) => c.id === p.client);
+  const clientName = client?.name ?? p.client;
+  return {
+    p,
+    clientName,
+    cats: p.cats.map((id) => services.find((x) => x.id === id)?.[lang].short).filter(Boolean) as string[],
+    text: norm([clientName, client && 'full' in client ? client.full : '', p.unit ?? '', p.es, p.en].join(' ')),
+    sector: client?.sector ?? '',
+  };
+});
+---
+<section class="page-hero gridpaper" aria-labelledby="page-title">
+  <div class="page-hero__intro">
+    <p class="label kicker">{P.eyebrow}</p>
+    <h1 class="display page-hero__title" id="page-title">{P.title}</h1>
+  </div>
+  <div class="page-hero__panel">
+    <p class="mono">{P.lead(projects.length, nSector('publico'), nSector('municipal'), nSector('privado'))}</p>
+    <dl class="page-hero__stats">
+      {sectors.map((sec) => (
+        <div>
+          <dt class="label">{sec.label}</dt>
+          <dd>{sec.n}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section
+  class="plist before-footer"
+  aria-labelledby="list-title"
+  data-projects
+  data-showing={P.showing(999001, 999002).replace('999001', '{a}').replace('999002', '{b}')}
+  data-param-svc={params.svc}
+  data-param-client={params.client}
+>
+  <div class="filters" role="search" aria-label={P.filtersAria}>
+    <label class="filters__search">
+      <span class="label filter-label">{P.search}</span>
+      <span>
+        <Icon name="search" />
+        <input type="search" name="q" placeholder={P.searchPlaceholder} autocomplete="off" />
+      </span>
+    </label>
+    <div class="filters__groups">
+      <div class="filter-group">
+        <span class="label filter-label" id="f-svc">{P.filterService}</span>
+        <div class="chips" role="group" aria-labelledby="f-svc">
+          <button type="button" class="chip" data-filter="svc" data-value="" aria-pressed="true">{P.all}</button>
+          {
+            svcWithCount.map((svc) => (
+              <button type="button" class="chip" data-filter="svc" data-value={svc.id} aria-pressed="false">
+                {svc[lang].short}
+                <span class="count">{svc.n}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="label filter-label" id="f-sector">{P.filterSector}</span>
+        <div class="chips" role="group" aria-labelledby="f-sector">
+          <button type="button" class="chip" data-filter="sector" data-value="" aria-pressed="true">{P.all}</button>
+          {
+            sectors.map((sec) => (
+              <button type="button" class="chip" data-filter="sector" data-value={sec.id} aria-pressed="false">
+                {sec.label}
+                <span class="count">{sec.n}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-bar">
+    <p class="label" aria-live="polite" data-count>{P.showing(projects.length, projects.length)}</p>
+    <span class="active-client label" data-active-client>
+      <span>{P.client}: <span data-client-label></span></span>
+      <button type="button" data-clear-client aria-label={P.reset}><Icon name="close" /></button>
+    </span>
+  </div>
+
+  <h2 class="sr-only" id="list-title">{P.listTitle}</h2>
+  <div data-list>
+    {
+      rows.map(({ p, clientName, cats, text, sector }) => (
+        <article class="prow" data-cats={p.cats.join(' ')} data-sector={sector} data-client={p.client} data-text={text}>
+          <span class="prow__num mono" aria-hidden="true">
+            {String(p.id).padStart(2, '0')}
+          </span>
+          <div>
+            <h3 class="prow__title">{p[lang]}</h3>
+            <p class="prow__client label">
+              <span class="sr-only">{P.client}: </span>
+              <a href={`${routes.projects[lang]}?${params.client}=${p.client}`} data-client-link={p.client}>
+                {clientName}
+              </a>
+              {p.unit && <span> · {p.unit}</span>}
+            </p>
+          </div>
+          <dl class="prow__dur">
+            <dt class="label">{P.duration}</dt>
+            <dd class="mono">{formatDuration(p.months, lang)}</dd>
+          </dl>
+          <p class="prow__tags">
+            <span class="sr-only">{P.type}: </span>
+            {cats.map((c) => (
+              <span class="tag">{c}</span>
+            ))}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="empty" data-empty>
+    <p class="mono">{P.none}</p>
+    <button type="button" class="btn btn--dark" data-reset>{P.reset}</button>
+  </div>
+
+  <p class="list-note mono">{P.note}</p>
+  <script is:inline type="application/json" data-client-names set:html={JSON.stringify(clientNames)}></script>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-projects]');
+  if (root) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('.prow'));
+    const countEl = root.querySelector<HTMLElement>('[data-count]')!;
+    const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
+    const clientChip = root.querySelector<HTMLElement>('[data-active-client]')!;
+    const clientLabel = root.querySelector<HTMLElement>('[data-client-label]')!;
+    const input = root.querySelector<HTMLInputElement>('input[name="q"]')!;
+    const names: Record<string, string> = JSON.parse(root.querySelector('[data-client-names]')?.textContent || '{}');
+    const pSvc = root.dataset.paramSvc || 'servicio';
+    const pClient = root.dataset.paramClient || 'cliente';
+    const template = root.dataset.showing || '{a} / {b}';
+    const norm = (x: string) =>
+      x
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .trim();
+
+    const url = new URLSearchParams(location.search);
+    const state = {
+      svc: url.get(pSvc) || url.get('servicio') || url.get('service') || '',
+      sector: url.get('sector') || '',
+      client: url.get(pClient) || url.get('cliente') || url.get('client') || '',
+      q: url.get('q') || '',
+    };
+    input.value = state.q;
+
+    const apply = () => {
+      const words = norm(state.q).split(/\s+/).filter(Boolean);
+      let shown = 0;
+      for (const c of cards) {
+        const ok =
+          (!state.svc || (c.dataset.cats || '').split(' ').includes(state.svc)) &&
+          (!state.sector || c.dataset.sector === state.sector) &&
+          (!state.client || c.dataset.client === state.client) &&
+          words.every((w) => (c.dataset.text || '').includes(w));
+        c.hidden = !ok;
+        if (ok) shown++;
+      }
+      root.querySelectorAll<HTMLElement>('[data-filter="svc"]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.value === state.svc)),
+      );
+      root.querySelectorAll<HTMLElement>('[data-filter="sector"]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.value === state.sector)),
+      );
+      countEl.textContent = template.replace('{a}', String(shown)).replace('{b}', String(cards.length));
+      emptyEl.classList.toggle('is-on', shown === 0);
+      clientChip.classList.toggle('is-on', Boolean(state.client));
+      clientLabel.textContent = names[state.client] || state.client;
+
+      const out = new URLSearchParams();
+      if (state.svc) out.set(pSvc, state.svc);
+      if (state.sector) out.set('sector', state.sector);
+      if (state.client) out.set(pClient, state.client);
+      if (state.q) out.set('q', state.q);
+      const qs = out.toString();
+      history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+    };
+
+    root.querySelectorAll<HTMLElement>('[data-filter]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const key = b.dataset.filter as 'svc' | 'sector';
+        state[key] = b.dataset.value || '';
+        apply();
+      }),
+    );
+    // El nombre del cliente en cada fila filtra sin recargar la página.
+    root.querySelectorAll<HTMLAnchorElement>('[data-client-link]').forEach((a) =>
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        state.client = a.dataset.clientLink || '';
+        apply();
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }),
+    );
+    input.addEventListener('input', () => {
+      state.q = input.value;
+      apply();
+    });
+    root.querySelector('[data-clear-client]')?.addEventListener('click', () => {
+      state.client = '';
+      apply();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      state.svc = state.sector = state.client = state.q = '';
+      input.value = '';
+      apply();
+    });
+    apply();
+  }
+</script>

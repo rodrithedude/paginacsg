@@ -1,0 +1,100 @@
+[
+  {
+    "id": "fluvial",
+    "icon": "river",
+    "es": {
+      "title": "Control de márgenes fluviales",
+      "short": "Control fluvial",
+      "desc": "Dragados, bordas, muros y espigones para prevenir inundaciones y proteger comunidades e infraestructura."
+    },
+    "en": {
+      "title": "River control & flood protection",
+      "short": "River control",
+      "desc": "Dredging, levees, walls and groynes that prevent flooding and protect communities and infrastructure."
+    }
+  },
+  {
+    "id": "obra-civil",
+    "icon": "building",
+    "es": {
+      "title": "Obra civil",
+      "short": "Obra civil",
+      "desc": "Drenajes, introducción de agua potable, bodegas, complejos industriales e instalaciones deportivas."
+    },
+    "en": {
+      "title": "Civil works",
+      "short": "Civil works",
+      "desc": "Drainage, drinking-water systems, warehouses, industrial complexes and sports facilities."
+    }
+  },
+  {
+    "id": "pavimentos",
+    "icon": "road",
+    "es": {
+      "title": "Pavimentos hidráulicos y asfálticos",
+      "short": "Pavimentos",
+      "desc": "Pavimentación y rehabilitación de carreteras, calles, patios de maniobras y parqueos."
+    },
+    "en": {
+      "title": "Concrete & asphalt paving",
+      "short": "Paving",
+      "desc": "Construction and rehabilitation of highways, streets, yards and parking areas."
+    }
+  },
+  {
+    "id": "tierra",
+    "icon": "earth",
+    "es": {
+      "title": "Movimientos de tierra",
+      "short": "Movimiento de tierra",
+      "desc": "Apertura de brechas, conformación de subrasante, bases estabilizadas y balastrado de caminos."
+    },
+    "en": {
+      "title": "Earthworks",
+      "short": "Earthworks",
+      "desc": "Pioneer roads, subgrade shaping, stabilized bases and road gravelling."
+    }
+  },
+  {
+    "id": "hidroelectricas",
+    "icon": "dam",
+    "es": {
+      "title": "Hidroeléctricas",
+      "short": "Hidroeléctricas",
+      "desc": "Obra civil para proyectos de generación hidroeléctrica."
+    },
+    "en": {
+      "title": "Hydroelectric projects",
+      "short": "Hydroelectric",
+      "desc": "Civil works for hydroelectric power projects."
+    }
+  },
+  {
+    "id": "planificacion",
+    "icon": "plan",
+    "es": {
+      "title": "Planificación y dirección de proyectos",
+      "short": "Planificación y dirección",
+      "desc": "Planificación, dirección y control de obras de principio a fin."
+    },
+    "en": {
+      "title": "Project planning & management",
+      "short": "Planning & management",
+      "desc": "Planning, management and control of construction projects from start to finish."
+    }
+  },
+  {
+    "id": "urbanizacion",
+    "icon": "houses",
+    "es": {
+      "title": "Urbanización",
+      "short": "Urbanización",
+      "desc": "Calles, drenajes y servicios para desarrollos residenciales."
+    },
+    "en": {
+      "title": "Urban development",
+      "short": "Urban development",
+      "desc": "Streets, drainage and utilities for residential developments."
+    }
+  }
+]

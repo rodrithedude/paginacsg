@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import HomePage from '../components/HomePage.astro';
+import { t } from '../i18n/ui';
+const s = t('es');
+---
+<Base lang="es" page="home" title={s.meta.homeTitle} description={s.meta.homeDesc} jsonLd>
+  <HomePage lang="es" />
+</Base>

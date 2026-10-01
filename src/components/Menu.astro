@@ -1,0 +1,75 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+import { navFor } from '../lib/nav';
+import { t, type Lang, type PageKey } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+}
+const { lang, page } = Astro.props;
+const s = t(lang);
+const nav = navFor(lang, page);
+// En inicio la barra aparece al pasar la portada; en las demás páginas está siempre visible.
+const fixed = page !== 'home';
+---
+<!-- Barra compacta -->
+<header class:list={['topbar', { 'topbar--static is-visible': fixed }]} data-topbar>
+  <a class="topbar__brand" href={nav.home} aria-label={s.nav.homeAria}>
+    <Logo class="topbar__logo" height={28} />
+    <span class="topbar__name">{site.name}</span>
+  </a>
+  <div class="topbar__actions">
+    <a class="btn btn--ghost topbar__lang" href={nav.lang.href} hreflang={nav.lang.other} lang={nav.lang.other} aria-label={nav.lang.aria}>
+      {nav.lang.short}
+    </a>
+    <button class="btn btn--orange btn-menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+      {s.nav.menu} <span class="btn-menu__lines" aria-hidden="true"></span>
+    </button>
+    <a class="btn btn--light topbar__contact" href={nav.contact}>
+      {s.nav.contact} <Icon name="arrow" class="btn__icon" />
+    </a>
+  </div>
+</header>
+
+<!-- Menú a pantalla completa -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label={s.nav.menuLabel} hidden data-menu>
+  <div class="menu__inner">
+    <div class="menu__top">
+      <a class="menu__brand" href={nav.home} data-menu-link aria-label={s.nav.homeAria}>
+        <Logo height={44} />
+      </a>
+      <button class="btn btn--orange menu__close" type="button" data-menu-close>
+        {s.nav.close} <span class="menu__x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <nav class="menu__nav" aria-label={s.nav.main}>
+      <ol>
+        {
+          nav.links.map((l, i) => (
+            <li>
+              <a href={l.href} data-menu-link aria-current={l.current ? 'page' : undefined}>
+                <span class="menu__num">{String(i + 1).padStart(2, '0')}</span>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <div class="menu__aside">
+      <p class="label">{site.name}</p>
+      <p class="mono">
+        <a href={site.phoneHref}>{site.phone}</a><br />
+        <a href={`mailto:${site.email}`}>{site.email}</a><br />
+        {site.address.street}<br />
+        {site.address.city}, {site.address.country}
+      </p>
+      <a class="btn btn--ghost-dark menu__lang" href={nav.lang.href} hreflang={nav.lang.other} lang={nav.lang.other}>
+        {nav.lang.label}
+      </a>
+    </div>
+  </div>
+</div>

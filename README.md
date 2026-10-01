@@ -1,62 +1,93 @@
-# CSG — Construcciones y Soluciones Globales
+# Sitio web de CSG
 
-Sitio web de una sola página para CSG. Es HTML, CSS y JavaScript sin dependencias ni paso de compilación: se abre `index.html` en el navegador o se sube la carpeta tal cual a cualquier hosting (GitHub Pages, Netlify, Vercel, cPanel, etc.).
+Sitio de **CSG — Construcciones y Soluciones Globales**, en español e inglés.
+Está hecho con [Astro](https://astro.build): genera páginas HTML estáticas, sin base de datos ni servidor,
+así que se puede publicar **gratis** en Cloudflare, Netlify o GitHub Pages.
 
-## Estructura
+| Página    | Español        | Inglés          |
+|-----------|----------------|-----------------|
+| Inicio    | `/`            | `/en/`          |
+| Proyectos | `/proyectos/`  | `/en/projects/` |
+| Clientes  | `/clientes/`   | `/en/clients/`  |
 
+La página de inicio tiene: portada, cifras y reseña, servicios, “Cómo trabajamos” (misión, visión, equipo e
+instalaciones), carrusel de proyectos destacados, clientes por sector, contacto con empleos y formulario de cotización.
+La página de proyectos permite filtrar por tipo de obra, sector, cliente y búsqueda (los enlaces con filtros se pueden compartir).
+
+---
+
+## 1. Fotos y logo
+
+No hace falta tocar código para las fotos: basta con copiar los archivos en estas carpetas.
+Mientras no haya fotos, se muestra un marcador gris con curvas de nivel y la etiqueta “Foto de obra”.
+
+| Qué | Dónde | Notas |
+|---|---|---|
+| Fotos de obras | `src/assets/obras/` | `.jpg`, `.png` o `.webp`. Se ordenan por nombre: use `01-…`, `02-…`. |
+| Portada | primera foto de `src/assets/obras/`, o `src/assets/portada.jpg` si existe | Horizontal, de al menos 2000 px de ancho. |
+| Foto de “Cómo trabajamos” | siguiente foto de `src/assets/obras/` | Se muestra cuadrada. |
+| Fondo del llamado a la acción | la foto que sigue | Se oscurece automáticamente. |
+| Foto de un proyecto destacado | `src/assets/obras/` + `"photo": "archivo.jpg"` en ese proyecto de `src/data/projects.json` | Proporción ~3:2. |
+| Pies de foto (opcional) | `src/data/photos.json` | Por nombre de archivo: `{ "01-avenida-reforma.jpg": { "es": "…", "en": "…" } }` |
+| Logo | `src/assets/logo.svg` o `logo.png` | Si no existe, se usa el logotipo “CSG” dibujado en el sitio. |
+
+Las fotos se optimizan solas al compilar (WebP en varios tamaños) y se muestran en blanco y negro, como en el diseño.
+Para verlas a color, quite el `filter` de `.media img` en `src/styles/global.css`.
+
+## 2. Textos y datos
+
+| Qué | Archivo |
+|---|---|
+| Nombre, teléfono, correo, dirección, fecha de fundación, cifras | `src/data/site.json` |
+| Proyectos (cliente, descripción ES/EN, duración en meses, tipo de obra) | `src/data/projects.json` |
+| Proyectos del carrusel de inicio | `"featured": 1, 2, 3…` en `src/data/projects.json` (el número es el orden) |
+| Clientes y sector | `src/data/clients.json` |
+| Servicios | `src/data/services.json` |
+| Todos los demás textos (ES/EN) | `src/i18n/ui.ts` |
+
+Los **años de experiencia** y el **año del pie de página** se calculan solos a partir de la fecha de fundación.
+
+## 3. Formulario de cotización
+
+Sin servidor, el formulario valida los campos y abre el programa de correo del visitante con el mensaje ya redactado,
+dirigido al correo de `src/data/site.json`. Para recibir los mensajes directamente (Formspree, Cloudflare, etc.)
+se cambia el bloque “Formulario de contacto” en `src/scripts/main.ts`.
+
+## 4. Verlo en su computadora (opcional)
+
+Requiere [Node.js](https://nodejs.org) 22.12 o más reciente.
+
+```bash
+npm install
+npm run dev      # abre http://localhost:4321
+npm run build    # genera la carpeta dist/ lista para publicar
 ```
-index.html              Contenido y estructura de la página
-assets/css/styles.css   Estilos (paleta, retícula, responsive)
-assets/js/main.js       Menú, barra superior, acordeón, carrusel, contadores y formulario
-assets/img/             Imágenes (las actuales son provisionales)
-assets/fonts/           Tipografías Chakra Petch y Geist Mono (licencia OFL)
-```
 
-## Secciones
+## 5. Publicar en Cloudflare (gratis)
 
-1. **Inicio**: logotipo, menú, foto principal y titular.
-2. **Nosotros**: cifras (proyectos, años, satisfacción, profesionales) y texto de experiencia.
-3. **Servicios**: construcción comercial, proyectos industriales, infraestructura y obra civil, gerencia de proyectos.
-4. **Principios**: acordeón con seguridad, calidad, entregas puntuales y relaciones a largo plazo.
-5. **Proyectos**: carrusel con fotos de obras.
-6. **Llamado a la acción** y **Contacto**: datos de contacto y formulario de cotización.
-7. **Pie de página**: navegación, redes sociales y avisos legales.
+### Opción A: arrastrar y soltar (sin programar)
 
-## Pendiente: reemplazar contenido provisional
+1. Ejecute `npm run build`.
+2. En Cloudflare → **Workers & Pages** → **Create application** → **Get started** → **Drag and drop your files**.
+3. Ponga nombre al proyecto (por ejemplo `csg`), arrastre la carpeta `dist/` y haga clic en **Deploy site**.
 
-En `index.html` cada punto a reemplazar está marcado con un comentario en MAYÚSCULAS (`FOTO:`, `CIFRAS:`, `DATOS DE CONTACTO:`, etc.).
+> Un proyecto creado con arrastrar y soltar **no se puede cambiar después** a publicación automática desde GitHub.
 
-| Qué | Dónde |
-| --- | --- |
-| Ciudad/país y año de fundación (“Ciudad, País”, “Desde 20XX”) | Hero |
-| Cifras (250+, 15+, 98 %, 500+) | Sección Nosotros (`data-count` y el número visible) |
-| Teléfono, correo, dirección y horario | Menú y sección Contacto |
-| Correo que recibe el formulario | `data-email` del `<form>` |
-| Enlaces de redes sociales (`href="#"`) | Pie de página |
-| Avisos de privacidad y términos | Pie de página |
-| Nombres y categorías de proyectos | Sección Proyectos |
+### Opción B: desde GitHub (se publica solo con cada cambio)
 
-### Fotos
+1. En Cloudflare → **Workers & Pages** → **Create application** → conecte este repositorio.
+2. Comando de compilación: `npm run build` · Carpeta de salida: `dist`.
 
-Las imágenes en `assets/img/` son ilustraciones provisionales. Para cambiarlas, copia la foto a `assets/img/` y actualiza el `src` correspondiente:
+## 6. Dominio
 
-| Archivo provisional | Uso | Proporción sugerida |
-| --- | --- | --- |
-| `hero.svg` | Foto principal | Horizontal, ~2:1 (mín. 2000 px de ancho) |
-| `seguridad.svg` | Principio “Seguridad ante todo” | Cuadrada |
-| `proyecto-*.svg` | Tarjetas del carrusel | ~3:2 |
-| `cta.svg` | Fondo del llamado a la acción | Horizontal, ~2.3:1 |
+El dominio está configurado en `astro.config.mjs` (`SITE`) y en `public/robots.txt`. Hoy apunta a `www.padico.com`;
+si CSG usará otro dominio, cámbielo en ambos archivos.
 
-Las fotos se muestran en blanco y negro automáticamente, como en el diseño de referencia. Si se prefieren a color, basta con quitar el `filter` de `.media img` en `styles.css`.
+Si se mantiene `padico.com`: su DNS está en **Azure** y el correo funciona con **Microsoft 365**.
+Para `www.padico.com`, en el proyecto de Cloudflare → **Custom domains** → agregue `www.padico.com`; Cloudflare indicará
+un registro **CNAME** que quien administra el DNS en Azure debe agregar. **No toque** los registros MX, TXT ni los CNAME
+de `autodiscover` o `selector1/selector2._domainkey`, para no afectar el correo.
 
-### Logotipo
+## Créditos
 
-El logotipo “CSG” está dibujado en SVG dentro de `index.html` (símbolo `#logo-csg`) y se reutiliza en el encabezado, el menú y el pie. Si hay un logotipo oficial, se reemplaza ese símbolo y todas las apariciones se actualizan solas. El favicon está en `assets/img/favicon.svg`.
-
-## Formulario de contacto
-
-Sin servidor, el formulario valida los campos y abre el cliente de correo del visitante con el mensaje ya redactado y dirigido a la dirección de `data-email`. Si se quiere recibir los mensajes directamente (Formspree, Netlify Forms, etc.), se cambia el bloque “Formulario de contacto” en `assets/js/main.js`.
-
-## Publicar con GitHub Pages
-
-En el repositorio: **Settings → Pages → Deploy from a branch**, elegir la rama y la carpeta raíz (`/`). El sitio queda en `https://<usuario>.github.io/<repositorio>/`.
+Tipografías Chakra Petch y Geist Mono, con licencia SIL Open Font License (ver `public/fonts/`).

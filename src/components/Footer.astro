@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+import { navFor } from '../lib/nav';
+import { t, type Lang, type PageKey } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+}
+const { lang, page } = Astro.props;
+const s = t(lang);
+const nav = navFor(lang, page);
+const year = new Date().getFullYear();
+---
+<footer class="footer step-top">
+  <div class="footer__left">
+    <p class="display footer__claim">{s.footer.tagline}</p>
+    <a class="btn btn--dark" href={nav.contact}>{s.cta.button} <Icon name="arrow" class="btn__icon" /></a>
+    <svg class="footer__mark" viewBox="0 0 348 120" aria-hidden="true"><use href="#logo-csg" /></svg>
+  </div>
+  <div class="footer__right">
+    <nav aria-label={s.nav.footer}>
+      <ul class="footer__nav">
+        {nav.links.slice(1).map((l) => (
+          <li><a href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <ul class="footer__contact mono">
+      <li><a href={site.phoneHref}>{s.contact.phone} {site.phone}</a></li>
+      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      <li>{site.address.street}, {site.address.city}</li>
+    </ul>
+  </div>
+  <div class="footer__bottom">
+    <p class="label">© <span data-current-year>{year}</span> {site.legalName} {s.footer.rights}</p>
+    <a class="label footer__lang" href={nav.lang.href} hreflang={nav.lang.other} lang={nav.lang.other}>{nav.lang.label}</a>
+  </div>
+</footer>

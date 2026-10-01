@@ -1,0 +1,21 @@
+{
+  "brand": "CSG",
+  "name": "Construcciones y Soluciones Globales",
+  "legalName": "Construcciones y Soluciones Globales, S.A.",
+  "foundingDate": "2000-04-13",
+  "phone": "+502 2361-5432",
+  "phoneHref": "tel:+50223615432",
+  "email": "info@padico.com",
+  "jobsEmail": "info@padico.com",
+  "address": {
+    "street": "Av. Las Américas 11-24, zona 13",
+    "city": "Ciudad de Guatemala",
+    "country": "Guatemala",
+    "countryCode": "GT"
+  },
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Av.+Las+Am%C3%A9ricas+11-24+zona+13+Ciudad+de+Guatemala",
+  "stats": {
+    "projects": 200,
+    "employees": 400
+  }
+}

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.json';
+import { t } from '../i18n/ui';
+const es = t('es');
+const en = t('en');
+---
+<Base lang="es" page="notFound" title={`404 · ${es.notFound.title} | ${site.brand}`} description={es.notFound.lead}>
+  <section class="nf before-footer gridpaper" aria-labelledby="nf-title">
+    <p class="display nf__code" aria-hidden="true">404</p>
+    <div class="nf__body">
+      <h1 class="display nf__title" id="nf-title">{es.notFound.title}</h1>
+      <p class="mono">{es.notFound.lead}</p>
+      <p class="mono" lang="en">{en.notFound.title}. {en.notFound.lead}</p>
+      <div class="nf__actions">
+        <a class="btn btn--orange" href="/">{es.notFound.back} <Icon name="arrow" class="btn__icon" /></a>
+        <a class="btn btn--ghost" href="/en/" lang="en">{en.notFound.back}</a>
+      </div>
+    </div>
+  </section>
+</Base>

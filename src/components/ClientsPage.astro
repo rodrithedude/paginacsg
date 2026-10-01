@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import projects from '../data/projects.json';
+import clients from '../data/clients.json';
+import { routes, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const C = s.clientsPage;
+const clientParam = lang === 'es' ? 'cliente' : 'client';
+
+const count = (id: string) => projects.filter((p) => p.client === id).length;
+const groups = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
+  id: sec,
+  label: s.clients.sectors[sec],
+  items: clients
+    .filter((c) => c.sector === sec)
+    .map((c) => ({ ...c, n: count(c.id) }))
+    .sort((a, b) => b.n - a.n || a.name.localeCompare(b.name, 'es')),
+}));
+---
+<section class="page-hero gridpaper" aria-labelledby="page-title">
+  <div class="page-hero__intro">
+    <p class="label kicker">{C.eyebrow}</p>
+    <h1 class="display page-hero__title" id="page-title">{C.title}</h1>
+  </div>
+  <div class="page-hero__panel">
+    <p class="mono">{C.lead}</p>
+    <dl class="page-hero__stats">
+      {groups.map((g) => (
+        <div>
+          <dt class="label">{g.label}</dt>
+          <dd>{g.items.length}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<div class="before-footer" style="background:var(--paper)">
+  {
+    groups.map((g) => (
+      <section class="sector" aria-labelledby={`sector-${g.id}`}>
+        <div class="sector__head">
+          <h2 class="display sector__title" id={`sector-${g.id}`}>{g.label}</h2>
+          <p class="display sector__count" aria-hidden="true">{String(g.items.length).padStart(2, '0')}</p>
+        </div>
+        <div class="cgrid">
+          {g.items.map((c) => (
+            <article class="ccard cut" data-reveal>
+              <div>
+                <h3>{c.name}</h3>
+                {'full' in c && c.full && <p class="mono">{c.full}</p>}
+              </div>
+              {c.n > 0 && (
+                <a class="link-arrow" href={`${routes.projects[lang]}?${clientParam}=${c.id}`}>
+                  {C.cta(c.n)} <Icon name="arrow" />
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

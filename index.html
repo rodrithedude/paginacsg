@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSG — Construcciones y Soluciones Globales</title>
+  <meta name="description" content="CSG, Construcciones y Soluciones Globales: construcción comercial, industrial, infraestructura y gerencia de proyectos con precisión, seguridad y calidad.">
+  <meta name="theme-color" content="#E7553D">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CSG — Construcciones y Soluciones Globales">
+  <meta property="og:description" content="Construimos con precisión. Entregamos con confianza.">
+  <meta property="og:locale" content="es_ES">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" href="assets/fonts/chakra-petch-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+  <!-- Símbolos SVG reutilizables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="logo-csg" viewBox="0 0 348 120">
+      <path d="M26 0H100V24H36L24 36V84L36 96H100V120H26L0 94V26Z"/>
+      <path transform="translate(124 0)" d="M26 0H100V24H36L24 36V48H74L100 74V94L74 120H0V96H64L76 84V72H26L0 46V26Z"/>
+      <path transform="translate(248 0)" d="M26 0H74L100 26V36H76L64 24H36L24 36V84L36 96H64L76 84V78H52V56H100V94L74 120H26L0 94V26Z"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 16 16">
+      <path d="M1.5 8h12M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 16 16">
+      <path d="M14.5 8h-12M7 3.5 2.5 8 7 12.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16">
+      <path d="M8 2v12M2 8h12" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Barra compacta que aparece al hacer scroll -->
+  <div class="topbar" data-topbar>
+    <a class="topbar__brand" href="#inicio" aria-label="CSG, ir al inicio">
+      <svg class="topbar__logo" aria-hidden="true"><use href="#logo-csg"/></svg>
+      <span class="topbar__name">Construcciones y<br>Soluciones Globales</span>
+    </a>
+    <div class="topbar__actions">
+      <button class="btn btn--orange btn-menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+        Menú <span class="btn-menu__lines" aria-hidden="true"></span>
+      </button>
+      <a class="btn btn--light" href="#contacto">Contacto <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+
+  <!-- Menú a pantalla completa -->
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú principal" hidden data-menu>
+    <div class="menu__inner">
+      <div class="menu__top">
+        <a class="menu__brand" href="#inicio" data-menu-link aria-label="CSG, ir al inicio">
+          <svg aria-hidden="true"><use href="#logo-csg"/></svg>
+        </a>
+        <button class="btn btn--orange menu__close" type="button" data-menu-close>
+          Cerrar <span class="menu__x" aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav class="menu__nav" aria-label="Secciones">
+        <ol>
+          <li><a href="#inicio" data-menu-link><span class="menu__num">01</span>Inicio</a></li>
+          <li><a href="#nosotros" data-menu-link><span class="menu__num">02</span>Nosotros</a></li>
+          <li><a href="#servicios" data-menu-link><span class="menu__num">03</span>Servicios</a></li>
+          <li><a href="#principios" data-menu-link><span class="menu__num">04</span>Principios</a></li>
+          <li><a href="#proyectos" data-menu-link><span class="menu__num">05</span>Proyectos</a></li>
+          <li><a href="#contacto" data-menu-link><span class="menu__num">06</span>Contacto</a></li>
+        </ol>
+      </nav>
+      <div class="menu__aside">
+        <p class="label">Construcciones y Soluciones Globales</p>
+        <!-- DATOS DE CONTACTO: reemplazar -->
+        <p class="mono"><a href="tel:+000000000000">+00 000 000 0000</a><br><a href="mailto:contacto@tudominio.com">contacto@tudominio.com</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="contenido">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <header class="hero__header">
+        <a class="hero__brand" href="#inicio" aria-label="CSG, Construcciones y Soluciones Globales">
+          <svg class="hero__logo" aria-hidden="true"><use href="#logo-csg"/></svg>
+        </a>
+        <button class="btn btn--orange btn-menu hero__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+          Menú <span class="btn-menu__lines" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn--light hero__contact" href="#contacto">Contacto <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </header>
+
+      <div class="hero__media media">
+        <!-- FOTO: reemplazar assets/img/hero.svg por la foto principal (ej. hero.jpg) -->
+        <img src="assets/img/hero.svg" alt="Edificio de concreto construido por CSG" width="1600" height="800" fetchpriority="high">
+      </div>
+      <div class="hero__rule-h" aria-hidden="true"></div>
+      <div class="hero__rule-v" aria-hidden="true"></div>
+
+      <div class="hero__intro">
+        <h1 class="display hero__title" data-reveal>
+          Construimos con precisión.<br>
+          Entregamos con confianza.
+        </h1>
+        <div class="hero__foot">
+          <p class="mono hero__lead" data-reveal>
+            Desde desarrollos comerciales hasta infraestructura a gran escala, CSG aporta experiencia, responsabilidad y ejecución a cada proyecto.
+          </p>
+          <span class="label">Vol.</span>
+        </div>
+      </div>
+
+      <div class="hero__panel" aria-hidden="true"></div>
+      <!-- UBICACIÓN / AÑO DE FUNDACIÓN: reemplazar -->
+      <div class="hero__meta label">
+        <span>Ciudad, País</span>
+        <span>Desde 20XX</span>
+      </div>
+      <div class="hero__aside">
+        <p class="mono hero__note" data-reveal>
+          Cada proyecto opera bajo un mismo sistema: cronogramas compartidos, responsabilidad compartida y estándares compartidos. Así, la obra comercial, industrial y de infraestructura se entrega con el mismo nivel de precisión.
+        </p>
+        <span class="label hero__code">01-A</span>
+      </div>
+    </section>
+
+    <!-- ============ NOSOTROS / CIFRAS ============ -->
+    <section class="about" id="nosotros" aria-labelledby="about-title">
+      <div class="stats">
+        <!-- CIFRAS: ajustar a los datos reales de CSG -->
+        <article class="stat cut" data-reveal>
+          <p class="stat__num"><span data-count="250">250</span><em>+</em></p>
+          <p class="stat__label mono">Proyectos entregados</p>
+        </article>
+        <article class="stat cut" data-reveal>
+          <p class="stat__num"><span data-count="15">15</span><em>+</em></p>
+          <p class="stat__label mono">Años de experiencia</p>
+        </article>
+        <article class="stat cut" data-reveal>
+          <p class="stat__num"><span data-count="98">98</span><em>%</em></p>
+          <p class="stat__label mono">Clientes satisfechos</p>
+        </article>
+        <article class="stat cut" data-reveal>
+          <p class="stat__num"><span data-count="500">500</span><em>+</em></p>
+          <p class="stat__label mono">Profesionales calificados</p>
+        </article>
+      </div>
+
+      <div class="about__panel" data-reveal>
+        <h2 class="display about__title" id="about-title">Experiencia en construcción respaldada por la trayectoria.</h2>
+        <p class="mono about__text">
+          CSG colabora con desarrolladores, empresas y organismos públicos para entregar proyectos que cumplen los más altos estándares de calidad, seguridad y desempeño.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SERVICIOS ============ -->
+    <section class="services step-top" id="servicios" aria-labelledby="services-title">
+      <div class="services__intro">
+        <p class="label services__kicker">Servicios</p>
+        <h2 class="display section-title" id="services-title" data-reveal>Construimos para acompañar cada etapa del desarrollo.</h2>
+      </div>
+      <div class="services__row services__row--a">
+        <article class="svc svc--orange" data-reveal>
+          <div class="svc__card cut gridpaper">
+            <header class="svc__head">
+              <h3 class="svc__title">Construcción<br>comercial</h3>
+              <span class="svc__num">01</span>
+            </header>
+            <svg class="svc__icon" viewBox="0 0 120 120" aria-hidden="true">
+              <rect x="32" y="32" width="56" height="56" rx="26"/>
+              <circle cx="36" cy="36" r="17"/><circle cx="84" cy="36" r="17"/>
+              <circle cx="36" cy="84" r="17"/><circle cx="84" cy="84" r="17"/>
+              <path d="M40 40 80 80M80 40 40 80"/>
+              <circle class="fill" cx="43" cy="31" r="2.2"/><circle class="fill" cx="89" cy="43" r="2.2"/>
+              <circle class="fill" cx="31" cy="77" r="2.2"/><circle class="fill" cx="77" cy="89" r="2.2"/>
+            </svg>
+          </div>
+          <p class="svc__desc mono cut">Edificios de oficinas, desarrollos de uso mixto, locales comerciales e instalaciones corporativas.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <div class="svc__card cut gridpaper">
+            <header class="svc__head">
+              <h3 class="svc__title">Proyectos<br>industriales</h3>
+              <span class="svc__num">02</span>
+            </header>
+            <svg class="svc__icon" viewBox="0 0 120 120" aria-hidden="true">
+              <path d="M46 16H20v88h26M52 26H30v68h22M56 36H40v48h16"/>
+              <path d="M74 16h26v88H74M68 26h22v68H68M64 36h16v48H64"/>
+              <path d="M46 16v10M74 16v10M46 104V94M74 104V94"/>
+              <rect x="51" y="51" width="18" height="18"/>
+            </svg>
+          </div>
+          <p class="svc__desc mono cut">Naves industriales, plantas de manufactura, centros logísticos e infraestructura operativa.</p>
+        </article>
+      </div>
+      <div class="services__aside">
+        <p class="mono" data-reveal>Soluciones integrales de construcción: desde el arranque de obra hasta el soporte a largo plazo.</p>
+      </div>
+      <div class="services__row services__row--b">
+        <article class="svc" data-reveal>
+          <div class="svc__card cut gridpaper">
+            <header class="svc__head">
+              <h3 class="svc__title">Infraestructura<br>y obra civil</h3>
+              <span class="svc__num">03</span>
+            </header>
+            <svg class="svc__icon" viewBox="0 0 120 120" aria-hidden="true">
+              <path d="M12 102h96"/>
+              <rect x="20" y="70" width="14" height="32"/><rect x="34" y="56" width="16" height="46"/>
+              <rect x="50" y="26" width="20" height="76"/>
+              <rect x="70" y="56" width="16" height="46"/><rect x="86" y="70" width="14" height="32"/>
+              <path d="M60 26v76M40 56v46M45 56v46M75 56v46M80 56v46M27 70v32M93 70v32"/>
+            </svg>
+          </div>
+          <p class="svc__desc mono cut">Obra pública, vialidades, redes de servicios y proyectos civiles de gran escala.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <div class="svc__card cut gridpaper">
+            <header class="svc__head">
+              <h3 class="svc__title">Gerencia de<br>proyectos</h3>
+              <span class="svc__num">04</span>
+            </header>
+            <svg class="svc__icon" viewBox="0 0 120 120" aria-hidden="true">
+              <path d="M18 62h84M60 20v84"/>
+              <path d="M26 58v8M34 58v8M42 58v8M50 58v8M70 58v8M78 58v8M86 58v8M94 58v8M56 28h8M56 36h8M56 44h8M56 52h8M56 72h8M56 80h8M56 88h8M56 96h8"/>
+              <circle cx="38" cy="38" r="4.5"/><circle cx="83" cy="43" r="4.5"/>
+              <circle cx="43" cy="83" r="4.5"/><circle cx="90" cy="88" r="4.5"/>
+            </svg>
+          </div>
+          <p class="svc__desc mono cut">Planeación, coordinación, presupuestos, programación y supervisión de entregas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PRINCIPIOS ============ -->
+    <section class="principles" id="principios" aria-labelledby="principles-title">
+      <div class="principles__intro">
+        <p class="label principles__kicker">Principios</p>
+        <h2 class="display section-title" id="principles-title" data-reveal>Cada proyecto guiado por principios probados.</h2>
+      </div>
+      <div class="principles__list" data-accordion>
+        <div class="acc is-open">
+          <h3 class="acc__heading">
+            <button class="acc__btn" type="button" id="acc-1-btn" aria-expanded="true" aria-controls="acc-1">
+              <span>Seguridad ante todo</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="acc__panel" id="acc-1" role="region" aria-labelledby="acc-1-btn">
+            <div class="acc__body">
+              <div class="acc__content">
+                <p class="mono">Compromiso firme con la seguridad laboral y el cumplimiento normativo en cada obra, todos los días.</p>
+                <!-- FOTO: reemplazar assets/img/seguridad.svg -->
+                <figure class="acc__media media"><img src="assets/img/seguridad.svg" alt="Trabajador de CSG con casco y chaleco de seguridad" width="600" height="600" loading="lazy"></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="acc">
+          <h3 class="acc__heading">
+            <button class="acc__btn" type="button" id="acc-2-btn" aria-expanded="false" aria-controls="acc-2">
+              <span>Calidad en la ejecución</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="acc__panel" id="acc-2" role="region" aria-labelledby="acc-2-btn">
+            <div class="acc__body">
+              <div class="acc__content">
+                <p class="mono">Control y supervisión en cada etapa para entregar estructuras y acabados que perduran.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="acc">
+          <h3 class="acc__heading">
+            <button class="acc__btn" type="button" id="acc-3-btn" aria-expanded="false" aria-controls="acc-3">
+              <span>Entregas puntuales</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="acc__panel" id="acc-3" role="region" aria-labelledby="acc-3-btn">
+            <div class="acc__body">
+              <div class="acc__content">
+                <p class="mono">Planeación rigurosa y seguimiento constante para cumplir los tiempos y presupuestos acordados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="acc">
+          <h3 class="acc__heading">
+            <button class="acc__btn" type="button" id="acc-4-btn" aria-expanded="false" aria-controls="acc-4">
+              <span>Relaciones a largo plazo</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="acc__panel" id="acc-4" role="region" aria-labelledby="acc-4-btn">
+            <div class="acc__body">
+              <div class="acc__content">
+                <p class="mono">Acompañamos a nuestros clientes antes, durante y después de la obra, construyendo confianza proyecto tras proyecto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTOS ============ -->
+    <section class="projects" id="proyectos" aria-labelledby="projects-title">
+      <div class="projects__head">
+        <h2 class="display section-title" id="projects-title" data-reveal>Proyectos construidos para durar décadas.</h2>
+        <a class="btn btn--orange" href="#contacto">Solicitar portafolio <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <!-- PROYECTOS: reemplazar imágenes, categorías y nombres -->
+      <div class="projects__track" data-carousel-track tabindex="0" aria-label="Galería de proyectos (desplazable)">
+        <article class="project">
+          <figure class="project__media media"><img src="assets/img/proyecto-torre.svg" alt="Torre corporativa" width="800" height="560" loading="lazy"></figure>
+          <span class="tag">Comercial</span>
+          <h3 class="project__caption">Edificio corporativo</h3>
+          <a class="project__more" href="#contacto" aria-label="Consultar sobre Edificio corporativo"><svg aria-hidden="true"><use href="#i-plus"/></svg></a>
+        </article>
+        <article class="project">
+          <figure class="project__media media"><img src="assets/img/proyecto-puerto.svg" alt="Terminal logística con grúas y contenedores" width="800" height="560" loading="lazy"></figure>
+          <span class="tag">Industrial</span>
+          <h3 class="project__caption">Terminal logística</h3>
+          <a class="project__more" href="#contacto" aria-label="Consultar sobre Terminal logística"><svg aria-hidden="true"><use href="#i-plus"/></svg></a>
+        </article>
+        <article class="project">
+          <figure class="project__media media"><img src="assets/img/proyecto-planta.svg" alt="Interior de planta de manufactura" width="800" height="560" loading="lazy"></figure>
+          <span class="tag">Industrial</span>
+          <h3 class="project__caption">Planta de manufactura</h3>
+          <a class="project__more" href="#contacto" aria-label="Consultar sobre Planta de manufactura"><svg aria-hidden="true"><use href="#i-plus"/></svg></a>
+        </article>
+        <article class="project">
+          <figure class="project__media media"><img src="assets/img/proyecto-puente.svg" alt="Puente vehicular atirantado" width="800" height="560" loading="lazy"></figure>
+          <span class="tag">Infraestructura</span>
+          <h3 class="project__caption">Puente vehicular</h3>
+          <a class="project__more" href="#contacto" aria-label="Consultar sobre Puente vehicular"><svg aria-hidden="true"><use href="#i-plus"/></svg></a>
+        </article>
+        <article class="project">
+          <figure class="project__media media"><img src="assets/img/proyecto-nave.svg" alt="Nave industrial con andenes de carga" width="800" height="560" loading="lazy"></figure>
+          <span class="tag">Industrial</span>
+          <h3 class="project__caption">Nave industrial</h3>
+          <a class="project__more" href="#contacto" aria-label="Consultar sobre Nave industrial"><svg aria-hidden="true"><use href="#i-plus"/></svg></a>
+        </article>
+      </div>
+
+      <div class="projects__controls">
+        <button class="sq-btn" type="button" data-carousel-prev aria-label="Proyecto anterior"><svg aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+        <button class="sq-btn" type="button" data-carousel-next aria-label="Proyecto siguiente"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </section>
+
+    <!-- ============ LLAMADO A LA ACCIÓN ============ -->
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="cta__media media">
+        <!-- FOTO: reemplazar assets/img/cta.svg -->
+        <img src="assets/img/cta.svg" alt="" width="1600" height="700" loading="lazy">
+      </div>
+      <div class="cta__rule-h" aria-hidden="true"></div>
+      <div class="cta__rule-v" aria-hidden="true"></div>
+      <p class="cta__kicker display" data-reveal>Trabaja con un equipo comprometido con la calidad, la seguridad y el valor a largo plazo, desde el arranque de obra hasta la entrega.</p>
+      <div class="cta__main">
+        <h2 class="display cta__title" id="cta-title" data-reveal>Construyamos juntos tu próximo proyecto.</h2>
+        <a class="btn btn--orange" href="#contacto">Solicitar cotización <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section class="contact step-top" id="contacto" aria-labelledby="contact-title">
+      <div class="contact__intro">
+        <p class="label contact__kicker">Contacto</p>
+        <h2 class="display section-title" id="contact-title" data-reveal>Hablemos de tu proyecto.</h2>
+        <p class="mono contact__lead">Cuéntanos qué necesitas construir y un especialista de CSG se pondrá en contacto contigo.</p>
+
+        <!-- DATOS DE CONTACTO: reemplazar -->
+        <dl class="contact__list">
+          <div><dt class="label">Teléfono</dt><dd class="mono"><a href="tel:+000000000000">+00 000 000 0000</a></dd></div>
+          <div><dt class="label">Correo</dt><dd class="mono"><a href="mailto:contacto@tudominio.com">contacto@tudominio.com</a></dd></div>
+          <div><dt class="label">Oficina</dt><dd class="mono">Dirección, número<br>Ciudad, País</dd></div>
+          <div><dt class="label">Horario</dt><dd class="mono">Lunes a viernes · 9:00 – 18:00</dd></div>
+        </dl>
+      </div>
+
+      <!-- data-email: correo que recibirá las solicitudes -->
+      <form class="form cut-lg gridpaper" data-contact-form data-email="contacto@tudominio.com" novalidate>
+        <div class="form__head">
+          <p class="label">Solicitud de cotización</p>
+          <span class="label form__code">F-01</span>
+        </div>
+        <div class="form__grid">
+          <label class="field">
+            <span class="field__label label">Nombre *</span>
+            <input name="nombre" type="text" autocomplete="name" required>
+          </label>
+          <label class="field">
+            <span class="field__label label">Empresa</span>
+            <input name="empresa" type="text" autocomplete="organization">
+          </label>
+          <label class="field">
+            <span class="field__label label">Correo *</span>
+            <input name="correo" type="email" autocomplete="email" required>
+          </label>
+          <label class="field">
+            <span class="field__label label">Teléfono</span>
+            <input name="telefono" type="tel" autocomplete="tel">
+          </label>
+          <label class="field field--full">
+            <span class="field__label label">Tipo de proyecto</span>
+            <select name="tipo">
+              <option>Construcción comercial</option>
+              <option>Proyecto industrial</option>
+              <option>Infraestructura y obra civil</option>
+              <option>Gerencia de proyectos</option>
+              <option>Otro</option>
+            </select>
+          </label>
+          <label class="field field--full">
+            <span class="field__label label">Mensaje *</span>
+            <textarea name="mensaje" rows="4" required></textarea>
+          </label>
+        </div>
+        <div class="form__foot">
+          <p class="mono form__status" data-form-status role="status" aria-live="polite"></p>
+          <button class="btn btn--orange btn--lg" type="submit">Enviar solicitud <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer step-top">
+      <div class="footer__left">
+        <p class="display footer__claim">Construimos bases más sólidas para empresas, comunidades y el crecimiento futuro.</p>
+        <a class="btn btn--dark" href="#contacto">Contáctanos <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <svg class="footer__mark" aria-hidden="true"><use href="#logo-csg"/></svg>
+      </div>
+      <div class="footer__right">
+        <nav aria-label="Pie de página">
+          <ul class="footer__nav">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#principios">Principios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+        <!-- REDES SOCIALES: reemplazar los href="#" -->
+        <ul class="social">
+          <li><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z"/></svg></a></li>
+          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm4 3.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM17 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h3.2v11H4V9Zm1.6-5.2a1.8 1.8 0 1 1 0 3.7 1.8 1.8 0 0 1 0-3.7ZM9.3 9h3.1v1.5c.5-.9 1.6-1.8 3.3-1.8 3.4 0 4 2.2 4 5.1V20h-3.2v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20H9.3V9Z"/></svg></a></li>
+          <li><a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5Zm0 1.8a7.7 7.7 0 1 1-4 14.3l-.3-.2-2.8.8.8-2.7-.2-.3A7.7 7.7 0 0 1 12 4.3Zm-3 3.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.6 5.7 4.9 2.8 1.1 3.4.9 4 .8.6-.1 2-.8 2.2-1.6.3-.8.3-1.5.2-1.6l-.6-.4-2.1-1c-.3-.1-.5-.2-.7.1l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6.3-.5v-.5l-1-2.4c-.2-.6-.5-.6-.7-.6H9Z"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="footer__bottom">
+        <p class="label">© <span data-year>2026</span> CSG — Construcciones y Soluciones Globales. Todos los derechos reservados.</p>
+        <p class="label footer__legal"><a href="#">Aviso de privacidad</a><a href="#">Términos y condiciones</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

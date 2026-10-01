@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid slice">
+  <!-- Imagen provisional: reemplazar por la foto del proyecto -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b0b0b0"/><stop offset="1" stop-color="#e4e4e4"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a8a8a"/><stop offset="1" stop-color="#4a4a4a"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .45 0 0 0 0 .45 0 0 0 0 .45 0 0 0 .2 0"/></filter>
+  </defs>
+  <rect width="800" height="560" fill="url(#sky)"/>
+  <path d="M0 330c80-30 160-40 240-28s160 18 240 0 210-20 320 8v30H0Z" fill="#9c9c9c"/>
+  <rect y="340" width="800" height="220" fill="url(#water)"/>
+  <g stroke="#fff" stroke-opacity=".18" stroke-width="2"><path d="M40 400h120M300 430h160M560 410h140M120 480h200M480 500h220"/></g>
+  <!-- pilón -->
+  <polygon points="400,60 418,60 440,330 378,330" fill="#3a3a3a"/>
+  <polygon points="409,60 418,60 440,330 412,330" fill="#5c5c5c"/>
+  <!-- tirantes -->
+  <g stroke="#2e2e2e" stroke-width="1.6">
+    <path d="M409 80 40 300M409 95 100 300M409 110 160 300M409 125 220 300M409 140 280 300M409 155 340 300"/>
+    <path d="M409 80 780 300M409 95 720 300M409 110 660 300M409 125 600 300M409 140 540 300M409 155 480 300"/>
+  </g>
+  <!-- tablero -->
+  <rect x="0" y="298" width="800" height="16" fill="#2b2b2b"/>
+  <rect x="0" y="298" width="800" height="4" fill="#9a9a9a"/>
+  <rect x="120" y="314" width="22" height="60" fill="#3f3f3f"/><rect x="660" y="314" width="22" height="60" fill="#3f3f3f"/>
+  <path d="M378 330h62v40h-62z" fill="#2f2f2f"/>
+  <rect width="800" height="560" filter="url(#grain)"/>
+</svg>

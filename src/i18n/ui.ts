@@ -128,10 +128,10 @@ export const ui = {
     clients: {
       eyebrow: 'Clientes',
       title: 'Han confiado en nosotros.',
-      lead: (n: number) => `${n} instituciones y empresas del sector público y privado.`,
+      lead: 'Ministerios, entidades de gobierno, municipalidades y empresas privadas de todo el país confían en nuestro trabajo.',
+      more: { publico: 'Y otras entidades de gobierno', municipal: 'Y otras municipalidades del país', privado: 'Y muchas empresas más' },
       all: 'Ver todos los clientes',
       sectors: { publico: 'Sector público', municipal: 'Municipalidades', privado: 'Sector privado' },
-      projectsCount: (n: number) => (n === 1 ? '1 proyecto' : `${n} proyectos`),
     },
     cta: {
       kicker: 'Personal calificado, maquinaria propia y control estricto en cada etapa, desde el primer metro hasta el último.',
@@ -192,7 +192,7 @@ export const ui = {
       eyebrow: 'Clientes',
       title: 'Quiénes han confiado en nosotros.',
       lead: 'Ministerios, entidades de gobierno, municipalidades y empresas privadas de Guatemala.',
-      cta: (n: number) => (n === 1 ? 'Ver 1 proyecto' : `Ver ${n} proyectos`),
+      cta: 'Ver proyectos',
     },
     lightbox: { label: 'Fotos del proyecto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', open: (name: string) => `Ver fotos de ${name}` },
     footer: {
@@ -303,10 +303,10 @@ export const ui = {
     clients: {
       eyebrow: 'Clients',
       title: 'They have trusted us.',
-      lead: (n: number) => `${n} public and private institutions and companies.`,
+      lead: 'Ministries, government agencies, municipalities and private companies across the country trust our work.',
+      more: { publico: 'And other government agencies', municipal: 'And other municipalities across the country', privado: 'And many more companies' },
       all: 'See all clients',
       sectors: { publico: 'Public sector', municipal: 'Municipalities', privado: 'Private sector' },
-      projectsCount: (n: number) => (n === 1 ? '1 project' : `${n} projects`),
     },
     cta: {
       kicker: 'Qualified people, our own machinery and strict control at every stage, from the first meter to the last.',
@@ -367,7 +367,7 @@ export const ui = {
       eyebrow: 'Clients',
       title: 'Who has trusted us.',
       lead: 'Ministries, government agencies, municipalities and private companies in Guatemala.',
-      cta: (n: number) => (n === 1 ? 'See 1 project' : `See ${n} projects`),
+      cta: 'See projects',
     },
     lightbox: { label: 'Project photos', close: 'Close', prev: 'Previous photo', next: 'Next photo', open: (name: string) => `See photos of ${name}` },
     footer: {

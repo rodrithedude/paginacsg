@@ -29,14 +29,6 @@ const groups = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
   </div>
   <div class="page-hero__panel">
     <p class="mono">{C.lead}</p>
-    <dl class="page-hero__stats">
-      {groups.map((g) => (
-        <div>
-          <dt class="label">{g.label}</dt>
-          <dd>{g.items.length}</dd>
-        </div>
-      ))}
-    </dl>
   </div>
 </section>
 
@@ -46,7 +38,6 @@ const groups = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
       <section class="sector" aria-labelledby={`sector-${g.id}`}>
         <div class="sector__head">
           <h2 class="display sector__title" id={`sector-${g.id}`}>{g.label}</h2>
-          <p class="display sector__count" aria-hidden="true">{String(g.items.length).padStart(2, '0')}</p>
         </div>
         <div class="cgrid">
           {g.items.map((c) => (
@@ -57,11 +48,12 @@ const groups = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
               </div>
               {c.n > 0 && (
                 <a class="link-arrow" href={`${routes.projects[lang]}?${clientParam}=${c.id}`}>
-                  {C.cta(c.n)} <Icon name="arrow" />
+                  {C.cta} <Icon name="arrow" />
                 </a>
               )}
             </article>
           ))}
+          <p class="ccard ccard--more cut">{s.clients.more[g.id]}…</p>
         </div>
       </section>
     ))

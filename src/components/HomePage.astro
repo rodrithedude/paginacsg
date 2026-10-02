@@ -7,7 +7,7 @@ import site from '../data/site.json';
 import services from '../data/services.json';
 import projects from '../data/projects.json';
 import clients from '../data/clients.json';
-import { heroImage, teamPhoto, ctaPhoto } from '../lib/media';
+import { heroSlides, teamPhoto, ctaPhoto } from '../lib/media';
 import { navFor } from '../lib/nav';
 import { anchors, routes, t, yearsSince, foundingYear, type Lang } from '../i18n/ui';
 
@@ -61,15 +61,35 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
     </div>
   </div>
 
-  <div class="hero__media media" style={`--focus-pos: ${site.photos.heroFocus ?? '50% 50%'}`}>
-    <Photo
-      src={heroImage}
-      alt={s.hero.photoAlt}
-      widths={[800, 1280, 1920, 2400]}
-      sizes="100vw"
-      loading="eager"
-      label={heroImage ? undefined : s.hero.photoLabel}
-    />
+  <div class="hero__media media" data-hero-slides>
+    {
+      heroSlides.length ? (
+        heroSlides.map((slide, i) => (
+          <div
+            class:list={['hero__slide', { 'is-active': i === 0 }]}
+            style={`--focus-pos: ${slide.focus}`}
+            data-caption={slide.caption[lang] ?? ''}
+            aria-hidden={i === 0 ? undefined : 'true'}
+          >
+            <Photo
+              src={slide.src}
+              alt={slide.caption[lang] ?? s.hero.photoAlt}
+              widths={[800, 1280, 1920, 2400]}
+              sizes="100vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          </div>
+        ))
+      ) : (
+        <Photo alt={s.hero.photoAlt} label={s.hero.photoLabel} />
+      )
+    }
+    {heroSlides.length > 0 && (
+      <p class="hero__caption" aria-hidden="true">
+        {heroSlides.length > 1 && <span class="hero__count" data-hero-count>01 / {String(heroSlides.length).padStart(2, '0')}</span>}
+        <span data-hero-caption>{heroSlides[0].caption[lang]}</span>
+      </p>
+    )}
   </div>
   <div class="hero__rule-h" aria-hidden="true"></div>
   <div class="hero__rule-v" aria-hidden="true"></div>
@@ -259,7 +279,7 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
       <p class="label kicker">{s.clients.eyebrow}</p>
       <h2 class="display section-title" id="clients-title" data-reveal>{s.clients.title}</h2>
     </div>
-    <p class="mono">{s.clients.lead(clients.length)}</p>
+    <p class="mono">{s.clients.lead}</p>
     <a class="btn btn--dark" href={routes.clients[lang]}>{s.clients.all} <Icon name="arrow" class="btn__icon" /></a>
   </div>
   <div class="clients__cols">
@@ -267,12 +287,13 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
       sectors.map((g) => (
         <div data-reveal>
           <h3 class="label clients__sector">
-            {g.label} <small>{String(g.items.length).padStart(2, '0')}</small>
+            {g.label}
           </h3>
           <ul class="clients__list">
             {g.items.map((c) => (
               <li title={'full' in c ? c.full : undefined}>{c.name}</li>
             ))}
+            <li class="clients__more">{s.clients.more[g.id]}</li>
           </ul>
         </div>
       ))

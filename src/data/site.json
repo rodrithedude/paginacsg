@@ -30,8 +30,32 @@
     "employees": 400
   },
   "photos": {
-    "hero": "bodegas-caes-3.jpg",
-    "heroFocus": "50% 40%",
+    "hero": [
+      {
+        "file": "proyecto-xochi-1.jpg",
+        "focus": "50% 42%",
+        "es": "Control de ríos · Proyecto Xochi",
+        "en": "River control · Xochi project"
+      },
+      {
+        "file": "finca-el-socorro-pavimento-2.jpg",
+        "focus": "50% 45%",
+        "es": "Pavimento hidráulico · Finca El Socorro",
+        "en": "Concrete paving · Finca El Socorro"
+      },
+      {
+        "file": "centro-comercial-blue-1.jpg",
+        "focus": "50% 18%",
+        "es": "Excavación de sótanos · Centro Comercial Blue",
+        "en": "Basement excavation · Blue shopping center"
+      },
+      {
+        "file": "bodegas-caes-3.jpg",
+        "focus": "50% 40%",
+        "es": "Estructura metálica · Bodegas CAES",
+        "en": "Steel structure · CAES warehouses"
+      }
+    ],
     "team": "casa-finca-el-socorro-2.jpg",
     "cta": "edificio-vent14-1.jpg"
   }

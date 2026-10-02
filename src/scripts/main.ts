@@ -81,6 +81,34 @@ if (topbar && heroIntro && !topbar.classList.contains('topbar--static') && 'Inte
   ).observe(heroIntro);
 }
 
+/* ---------- Portada: fotos que se van alternando ---------- */
+const heroRoot = document.querySelector<HTMLElement>('[data-hero-slides]');
+if (heroRoot) {
+  const slides = [...heroRoot.querySelectorAll<HTMLElement>('.hero__slide')];
+  const caption = heroRoot.querySelector<HTMLElement>('[data-hero-caption]');
+  const count = heroRoot.querySelector<HTMLElement>('[data-hero-count]');
+  if (slides.length > 1 && !reduceMotion) {
+    // Cargar de una vez las demás fotos para que el cambio no muestre un hueco.
+    slides.forEach((s) => s.querySelector('img')?.setAttribute('loading', 'eager'));
+    let current = 0;
+    const total = String(slides.length).padStart(2, '0');
+    const show = (i: number) => {
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      current = i % slides.length;
+      slides[current].classList.add('is-active');
+      slides[current].removeAttribute('aria-hidden');
+      if (caption) caption.textContent = slides[current].dataset.caption || '';
+      if (count) count.textContent = `${String(current + 1).padStart(2, '0')} / ${total}`;
+    };
+    let timer = window.setInterval(() => show(current + 1), 6500);
+    document.addEventListener('visibilitychange', () => {
+      window.clearInterval(timer);
+      if (!document.hidden) timer = window.setInterval(() => show(current + 1), 6500);
+    });
+  }
+}
+
 /* ---------- Acordeón ---------- */
 document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((group) => {
   const items = [...group.querySelectorAll<HTMLElement>('.acc')];

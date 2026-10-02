@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.padico.com/sitemap-index.xml
+Sitemap: https://csgconstructora.com/sitemap-index.xml

@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Dominio final del sitio. Si CSG usa otro dominio, cámbielo aquí y en public/robots.txt.
-const SITE = 'https://www.padico.com';
+// Dominio del sitio (canónico, sin www). Si cambia, actualícelo también en public/robots.txt.
+const SITE = 'https://csgconstructora.com';
 
 export default defineConfig({
   site: SITE,

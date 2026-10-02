@@ -15,7 +15,7 @@ interface Props {
 }
 const { lang, page, title, description, jsonLd = false } = Astro.props;
 const s = t(lang);
-const siteUrl = Astro.site ?? new URL('https://www.padico.com');
+const siteUrl = Astro.site ?? new URL('https://csgconstructora.com');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const alternates =
   page === 'notFound'

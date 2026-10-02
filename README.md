@@ -68,30 +68,27 @@ npm run dev      # abre http://localhost:4321
 npm run build    # genera la carpeta dist/ lista para publicar
 ```
 
-## 5. Publicar en Cloudflare (gratis)
+## 5. Publicar en Cloudflare Workers
 
-### Opción A: arrastrar y soltar (sin programar)
+El sitio se publica como un Worker con archivos estáticos (`wrangler.jsonc`: carpeta `dist/`, página 404 propia).
+El Worker `paginacsg` está conectado a este repositorio: cada cambio que se sube a la rama se compila
+(`npm run build`) y se publica (`npx wrangler deploy`) automáticamente.
 
-1. Ejecute `npm run build`.
-2. En Cloudflare → **Workers & Pages** → **Create application** → **Get started** → **Drag and drop your files**.
-3. Ponga nombre al proyecto (por ejemplo `csg`), arrastre la carpeta `dist/` y haga clic en **Deploy site**.
+Si se crea de nuevo: Cloudflare → **Workers & Pages** → **Create** → **Import a repository** → elegir este
+repositorio, con comando de compilación `npm run build` y de publicación `npx wrangler deploy`.
+El nombre del Worker debe coincidir con `"name"` en `wrangler.jsonc`.
 
-> Un proyecto creado con arrastrar y soltar **no se puede cambiar después** a publicación automática desde GitHub.
+## 6. Dominio csgconstructora.com
 
-### Opción B: desde GitHub (se publica solo con cada cambio)
+El dominio está registrado en Hostinger con los *nameservers* de Cloudflare. Para que el sitio responda en él:
 
-1. En Cloudflare → **Workers & Pages** → **Create application** → conecte este repositorio.
-2. Comando de compilación: `npm run build` · Carpeta de salida: `dist`.
+1. **Dominio principal:** Workers & Pages → `paginacsg` → **Settings** → **Domains & Routes** → **Add** →
+   **Custom domain** → `csgconstructora.com`. Cloudflare crea solo el registro DNS y el certificado SSL.
+2. **www:** Rules → **Redirect Rules** → **Create rule** → plantilla **“Redirect from WWW to root”**, para que
+   `www.csgconstructora.com` lleve a `csgconstructora.com`. El registro `CNAME www` (con la nube naranja) se mantiene.
+3. **Correo:** los registros MX, SPF y DMARC de Titan no se tocan.
 
-## 6. Dominio
-
-El dominio está configurado en `astro.config.mjs` (`SITE`) y en `public/robots.txt`. Hoy apunta a `www.padico.com`;
-si CSG usará otro dominio, cámbielo en ambos archivos.
-
-Si se mantiene `padico.com`: su DNS está en **Azure** y el correo funciona con **Microsoft 365**.
-Para `www.padico.com`, en el proyecto de Cloudflare → **Custom domains** → agregue `www.padico.com`; Cloudflare indicará
-un registro **CNAME** que quien administra el DNS en Azure debe agregar. **No toque** los registros MX, TXT ni los CNAME
-de `autodiscover` o `selector1/selector2._domainkey`, para no afectar el correo.
+El dominio también está en `astro.config.mjs` (`SITE`) y en `public/robots.txt`.
 
 ## Créditos
 

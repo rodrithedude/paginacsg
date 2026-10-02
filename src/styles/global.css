@@ -742,6 +742,18 @@ button.fcard__media:focus-visible { outline-offset: -4px; }
 .contact__list dd a:not(.link-arrow) { transition: color .25s; }
 .contact__list dd a:not(.link-arrow):hover { color: var(--orange-deep); }
 .contact__list .link-arrow { margin-top: 10px; }
+.contact__map {
+  margin-top: clamp(20px, 2.4vw, 54px);
+  aspect-ratio: 4 / 3;
+  background: var(--concrete);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.contact__map iframe {
+  display: block; width: 100%; height: 100%; border: 0;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter .6s var(--ease);
+}
+.contact__map:hover iframe, .contact__map:focus-within iframe { filter: none; }
 .jobs { margin-top: clamp(24px, 3vw, 64px); padding: 18px 18px 16px; background: var(--concrete); }
 .jobs .label { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .jobs .label::before { content: ""; width: 7px; height: 7px; background: var(--ink); }

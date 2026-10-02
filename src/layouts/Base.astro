@@ -47,6 +47,8 @@ const org = {
     postalCode: site.address.postalCode,
     addressCountry: site.address.countryCode,
   },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  hasMap: site.mapsUrl,
   areaServed: { '@type': 'Country', name: 'Guatemala' },
   numberOfEmployees: { '@type': 'QuantitativeValue', minValue: site.stats.employees },
 };

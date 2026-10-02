@@ -20,7 +20,11 @@
     "countryCode": "GT",
     "postalCode": "01013"
   },
-  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Av.+Las+Am%C3%A9ricas+11-24+zona+13+Ciudad+de+Guatemala",
+  "geo": {
+    "lat": 14.58530858092912,
+    "lng": -90.52119898885965
+  },
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=14.58530858092912,-90.52119898885965",
   "stats": {
     "projects": 200,
     "employees": 400

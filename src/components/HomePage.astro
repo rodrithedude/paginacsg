@@ -22,6 +22,8 @@ const projectsUrl = routes.projects[lang];
 const params = lang === 'es' ? { svc: 'servicio', client: 'cliente' } : { svc: 'service', client: 'client' };
 
 const years = yearsSince(site.foundingDate);
+// Mapa de la oficina (Google Maps, sin clave de API)
+const mapEmbed = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=17&hl=${lang}&output=embed`;
 const countFor = (id: string) => projects.filter((p) => p.cats.includes(id)).length;
 
 // Carrusel: proyectos con fotos, en el orden de "featured".
@@ -316,6 +318,16 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
         </dd>
       </div>
     </dl>
+
+    <figure class="contact__map media">
+      <iframe
+        src={mapEmbed}
+        title={s.contact.mapTitle}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </figure>
 
     <aside class="jobs" aria-labelledby="jobs-title">
       <h3 class="label" id="jobs-title">{s.contact.jobsTitle}</h3>

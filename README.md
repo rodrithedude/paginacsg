@@ -1,6 +1,6 @@
 # Sitio web de CSG
 
-Sitio de **CSG — Construcciones y Soluciones Globales**, en español e inglés.
+Sitio de **CSG — Construcciones y Servicios Globales**, en español e inglés.
 Está hecho con [Astro](https://astro.build): genera páginas HTML estáticas, sin base de datos ni servidor,
 así que se puede publicar **gratis** en Cloudflare, Netlify o GitHub Pages.
 
@@ -29,10 +29,16 @@ Mientras no haya fotos, se muestra un marcador gris con curvas de nivel y la eti
 | Fondo del llamado a la acción | la foto que sigue | Se oscurece automáticamente. |
 | Foto de un proyecto destacado | `src/assets/obras/` + `"photo": "archivo.jpg"` en ese proyecto de `src/data/projects.json` | Proporción ~3:2. |
 | Pies de foto (opcional) | `src/data/photos.json` | Por nombre de archivo: `{ "01-avenida-reforma.jpg": { "es": "…", "en": "…" } }` |
-| Logo | `src/assets/logo.svg` o `logo.png` | Si no existe, se usa el logotipo “CSG” dibujado en el sitio. |
+| Logo | ya incluido (vectorizado) | El sitio usa el logotipo oficial CSG en vector. Copias para otros usos: `public/img/csg-logo.svg` (marca) y `public/img/csg-logo-completo.svg` (con la razón social en gris). |
 
 Las fotos se optimizan solas al compilar (WebP en varios tamaños) y se muestran en blanco y negro, como en el diseño.
 Para verlas a color, quite el `filter` de `.media img` en `src/styles/global.css`.
+
+### Colores
+
+Tomados del logotipo: naranja `#FF8311`, grafito `#282828`, papel `#F8F7F3` y grises. Sobre el naranja el texto va en
+gris oscuro, porque el blanco no se lee bien; para texto naranja sobre fondo claro se usa `#B35300`.
+Están definidos al inicio de `src/styles/global.css`.
 
 ## 2. Textos y datos
 

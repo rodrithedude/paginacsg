@@ -1,7 +1,12 @@
 {
   "brand": "CSG",
-  "name": "Construcciones y Soluciones Globales",
-  "legalName": "Construcciones y Soluciones Globales, S.A.",
+  "name": "Construcciones y Servicios Globales",
+  "legalName": "Construcciones y Servicios Globales, S.A.",
+  "logoLines": [
+    "Construcciones",
+    "y Servicios",
+    "Globales, S.A."
+  ],
   "foundingDate": "2000-04-13",
   "phone": "+502 2361-5432",
   "phoneHref": "tel:+50223615432",

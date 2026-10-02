@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -12 348 77">
+  <title>CSG — Construcciones y Servicios Globales, S.A.</title>
+  <g fill="#FF8311">
+    <path d="M0 0H53V12H12V41H53V53H0Z"/>
+    <path d="M58 0H111V12H70V20H111V53H58V41H99V33H58Z"/>
+    <path d="M116 0H170V12H128V41H157V33H137V20H170V53H116Z"/>
+  </g>
+  <rect x="180" y="-10" width="1.2" height="73" fill="#6F6E69"/>
+  <g fill="#6F6E69" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="700" font-size="16">
+    <text x="191" y="12.5">CONSTRUCCIONES</text>
+    <text x="191" y="32">Y SERVICIOS</text>
+    <text x="191" y="51.5">GLOBALES, S.A.</text>
+  </g>
+</svg>

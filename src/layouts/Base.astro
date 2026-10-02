@@ -58,7 +58,7 @@ const org = {
     <meta name="description" content={description} />
     {page !== 'notFound' && <link rel="canonical" href={canonical} />}
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    <meta name="theme-color" content="#E7553D" />
+    <meta name="theme-color" content="#FF8311" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -81,12 +81,12 @@ const org = {
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body data-page={page}>
-    <!-- Logotipo CSG (se reutiliza en encabezado, menú y pie) -->
+    <!-- Logotipo CSG oficial, vectorizado (se reutiliza en encabezado, menú y pie) -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <symbol id="logo-csg" viewBox="0 0 348 120">
-        <path d="M26 0H100V24H36L24 36V84L36 96H100V120H26L0 94V26Z" />
-        <path transform="translate(124 0)" d="M26 0H100V24H36L24 36V48H74L100 74V94L74 120H0V96H64L76 84V72H26L0 46V26Z" />
-        <path transform="translate(248 0)" d="M26 0H74L100 26V36H76L64 24H36L24 36V84L36 96H64L76 84V78H52V56H100V94L74 120H26L0 94V26Z" />
+      <symbol id="logo-csg" viewBox="0 0 170 53">
+        <path d="M0 0H53V12H12V41H53V53H0Z" />
+        <path d="M58 0H111V12H70V20H111V53H58V41H99V33H58Z" />
+        <path d="M116 0H170V12H128V41H157V33H137V20H170V53H116Z" />
       </symbol>
     </svg>
 

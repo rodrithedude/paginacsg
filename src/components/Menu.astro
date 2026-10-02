@@ -18,8 +18,7 @@ const fixed = page !== 'home';
 <!-- Barra compacta -->
 <header class:list={['topbar', { 'topbar--static is-visible': fixed }]} data-topbar>
   <a class="topbar__brand" href={nav.home} aria-label={s.nav.homeAria}>
-    <Logo class="topbar__logo" height={28} />
-    <span class="topbar__name">{site.name}</span>
+    <Logo class="topbar__logo" height={34} lockup />
   </a>
   <div class="topbar__actions">
     <a class="btn btn--ghost topbar__lang" href={nav.lang.href} hreflang={nav.lang.other} lang={nav.lang.other} aria-label={nav.lang.aria}>
@@ -39,7 +38,7 @@ const fixed = page !== 'home';
   <div class="menu__inner">
     <div class="menu__top">
       <a class="menu__brand" href={nav.home} data-menu-link aria-label={s.nav.homeAria}>
-        <Logo height={44} />
+        <Logo height={44} lockup />
       </a>
       <button class="btn btn--orange menu__close" type="button" data-menu-close>
         {s.nav.close} <span class="menu__x" aria-hidden="true"></span>

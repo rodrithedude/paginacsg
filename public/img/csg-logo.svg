@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 53">
+  <title>CSG</title>
+  <g fill="#FF8311">
+    <path d="M0 0H53V12H12V41H53V53H0Z"/>
+    <path d="M58 0H111V12H70V20H111V53H58V41H99V33H58Z"/>
+    <path d="M116 0H170V12H128V41H157V33H137V20H170V53H116Z"/>
+  </g>
+</svg>

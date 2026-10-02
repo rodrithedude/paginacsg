@@ -27,6 +27,7 @@ tamaños) y se muestran en blanco y negro, como en el diseño; al pasar el curso
 | Orden de los proyectos con fotos | `"featured": 1, 2, 3…` en `src/data/projects.json` (carrusel de inicio y página de proyectos). |
 | Portada, foto de “Cómo trabajamos” y fondo del llamado a la acción | `"photos": { "hero", "team", "cta" }` en `src/data/site.json`. `"heroFocus"` indica qué parte de la portada se mantiene visible al recortarla (`"50% 18%"` = centrada y cerca de arriba). |
 | Etiqueta de la tarjeta (p. ej. “Pavimento hidráulico”) y nombre corto | `"tag"` y `"short"` (en español e inglés) en el proyecto. |
+| Año o periodo de la obra (p. ej. “2025–2026”) | `"years"` en el proyecto; se muestra en su tarjeta. |
 | Logo | Ya incluido (vectorizado). Copias para otros usos: `public/img/csg-logo.svg` (marca) y `public/img/csg-logo-completo.svg` (con la razón social en gris). |
 
 Para agregar un proyecto nuevo con fotos: copie las fotos a `src/assets/obras/` y agregue el proyecto al final de

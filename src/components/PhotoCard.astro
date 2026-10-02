@@ -13,6 +13,7 @@ export type Project = {
   unit?: string;
   sector?: string;
   months?: number;
+  years?: string;
   cats: string[];
   tag?: { es: string; en: string };
   short?: { es: string; en: string };
@@ -47,6 +48,7 @@ const gallery = await Promise.all(
   }),
 );
 const meta = [
+  p.years,
   client?.name,
   photos.length > 1 ? s.work.photos(photos.length) : undefined,
 ].filter(Boolean);

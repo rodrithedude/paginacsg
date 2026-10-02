@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import PhotoCard, { type Project } from './PhotoCard.astro';
 import services from '../data/services.json';
 import projects from '../data/projects.json';
 import clients from '../data/clients.json';
@@ -12,10 +13,9 @@ const { lang } = Astro.props;
 const s = t(lang);
 const P = s.projectsPage;
 
-type Project = (typeof projects)[number] & { unit?: string };
-
-const sectorOf = (clientId: string) => clients.find((c) => c.id === clientId)?.sector ?? '';
-const nSector = (sec: string) => projects.filter((p) => sectorOf(p.client) === sec).length;
+const all = projects as Project[];
+const sectorOf = (p: Project) => (p.client ? clients.find((c) => c.id === p.client)?.sector : undefined) ?? p.sector ?? '';
+const nSector = (sec: string) => all.filter((p) => sectorOf(p) === sec).length;
 const svcWithCount = services
   .map((svc) => ({ ...svc, n: projects.filter((p) => p.cats.includes(svc.id)).length }))
   .filter((svc) => svc.n > 0);
@@ -25,8 +25,11 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((id) => ({
   n: nSector(id),
 }));
 
-// Orden: proyectos más largos primero (suelen ser los de mayor envergadura).
-const sorted = [...(projects as Project[])].sort((a, b) => b.months - a.months || a.id - b.id);
+// Obras con fotos (tarjetas) en el orden de "featured"; el resto, los más largos primero.
+const withPhotos = all
+  .filter((p) => p.photos?.length)
+  .sort((a, b) => (a.featured ?? 999) - (b.featured ?? 999) || a.id - b.id);
+const sorted = all.filter((p) => !p.photos?.length).sort((a, b) => (b.months ?? 0) - (a.months ?? 0) || a.id - b.id);
 const clientNames = Object.fromEntries(clients.map((c) => [c.id, c.name]));
 const params = lang === 'es' ? { svc: 'servicio', client: 'cliente' } : { svc: 'service', client: 'client' };
 
@@ -36,16 +39,20 @@ const norm = (x: string) =>
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase();
-const rows = sorted.map((p) => {
-  const client = clients.find((c) => c.id === p.client);
-  const clientName = client?.name ?? p.client;
+const filterData = (p: Project) => {
+  const client = p.client ? clients.find((c) => c.id === p.client) : undefined;
   return {
-    p,
-    clientName,
-    cats: p.cats.map((id) => services.find((x) => x.id === id)?.[lang].short).filter(Boolean) as string[],
-    text: norm([clientName, client && 'full' in client ? client.full : '', p.unit ?? '', p.es, p.en].join(' ')),
-    sector: client?.sector ?? '',
+    'data-cats': p.cats.join(' '),
+    'data-sector': sectorOf(p),
+    'data-client': p.client ?? '',
+    'data-text': norm([client?.name ?? '', client && 'full' in client ? client.full : '', p.unit ?? '', p.es, p.en].join(' ')),
   };
+};
+const rows = sorted.map((p) => {
+  const client = p.client ? clients.find((c) => c.id === p.client) : undefined;
+  const cats = p.cats.map((id) => services.find((x) => x.id === id)?.[lang].short).filter(Boolean) as string[];
+  if (p.tag) cats.push(p.tag[lang]);
+  return { p, clientName: client?.name, cats, data: filterData(p) };
 });
 ---
 <section class="page-hero gridpaper" aria-labelledby="page-title">
@@ -54,7 +61,7 @@ const rows = sorted.map((p) => {
     <h1 class="display page-hero__title" id="page-title">{P.title}</h1>
   </div>
   <div class="page-hero__panel">
-    <p class="mono">{P.lead(projects.length, nSector('publico'), nSector('municipal'), nSector('privado'))}</p>
+    <p class="mono">{P.lead(all.length, withPhotos.length)}</p>
     <dl class="page-hero__stats">
       {sectors.map((sec) => (
         <div>
@@ -123,26 +130,39 @@ const rows = sorted.map((p) => {
   </div>
 
   <h2 class="sr-only" id="list-title">{P.listTitle}</h2>
-  <div data-list>
+  <div class="plist__group" data-group>
+    <h3 class="label plist__heading">{P.photosTitle}</h3>
+    <div class="pgrid">
+      {withPhotos.map((p) => <PhotoCard project={p} lang={lang} data={filterData(p)} sizes="(min-width: 1180px) 33vw, (min-width: 600px) 50vw, 100vw" />)}
+    </div>
+  </div>
+  <div class="plist__group" data-group>
+    <h3 class="label plist__heading">{P.moreTitle}</h3>
     {
-      rows.map(({ p, clientName, cats, text, sector }) => (
-        <article class="prow" data-cats={p.cats.join(' ')} data-sector={sector} data-client={p.client} data-text={text}>
+      rows.map(({ p, clientName, cats, data }) => (
+        <article class="prow" {...data}>
           <span class="prow__num mono" aria-hidden="true">
             {String(p.id).padStart(2, '0')}
           </span>
           <div>
-            <h3 class="prow__title">{p[lang]}</h3>
-            <p class="prow__client label">
-              <span class="sr-only">{P.client}: </span>
-              <a href={`${routes.projects[lang]}?${params.client}=${p.client}`} data-client-link={p.client}>
-                {clientName}
-              </a>
-              {p.unit && <span> · {p.unit}</span>}
-            </p>
+            <h4 class="prow__title">{p[lang]}</h4>
+            {clientName && (
+              <p class="prow__client label">
+                <span class="sr-only">{P.client}: </span>
+                <a href={`${routes.projects[lang]}?${params.client}=${p.client}`} data-client-link={p.client}>
+                  {clientName}
+                </a>
+                {p.unit && <span> · {p.unit}</span>}
+              </p>
+            )}
           </div>
           <dl class="prow__dur">
-            <dt class="label">{P.duration}</dt>
-            <dd class="mono">{formatDuration(p.months, lang)}</dd>
+            {p.months && (
+              <>
+                <dt class="label">{P.duration}</dt>
+                <dd class="mono">{formatDuration(p.months, lang)}</dd>
+              </>
+            )}
           </dl>
           <p class="prow__tags">
             <span class="sr-only">{P.type}: </span>
@@ -167,7 +187,8 @@ const rows = sorted.map((p) => {
 <script>
   const root = document.querySelector<HTMLElement>('[data-projects]');
   if (root) {
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('.prow'));
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('.prow, .fcard'));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>('[data-group]'));
     const countEl = root.querySelector<HTMLElement>('[data-count]')!;
     const emptyEl = root.querySelector<HTMLElement>('[data-empty]')!;
     const clientChip = root.querySelector<HTMLElement>('[data-active-client]')!;
@@ -213,6 +234,7 @@ const rows = sorted.map((p) => {
       );
       countEl.textContent = template.replace('{a}', String(shown)).replace('{b}', String(cards.length));
       emptyEl.classList.toggle('is-on', shown === 0);
+      groups.forEach((g) => (g.hidden = !g.querySelector('.prow:not([hidden]), .fcard:not([hidden])')));
       clientChip.classList.toggle('is-on', Boolean(state.client));
       clientLabel.textContent = names[state.client] || state.client;
 

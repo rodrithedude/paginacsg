@@ -68,7 +68,7 @@ export const ui = {
     langSwitch: { label: 'English', short: 'EN', aria: 'View this page in English' },
     meta: {
       homeTitle: `${site.brand} | Construcción de obras de ingeniería civil en Guatemala`,
-      homeDesc: `${site.name} (${site.brand}): pavimentos, control de márgenes fluviales, movimientos de tierra, obra civil y urbanización en Guatemala desde ${site.foundingDate.slice(0, 4)}.`,
+      homeDesc: `${site.name} (${site.brand}): pavimentos, movimientos de tierra y excavación de sótanos, obra civil para vivienda y edificios, estructuras metálicas, diseño estructural y manejo de cuencas en Guatemala desde ${site.foundingDate.slice(0, 4)}.`,
       projectsTitle: `Proyectos | ${site.brand}`,
       projectsDesc:
         'Carreteras, calles, control de ríos, movimientos de tierra y obra civil para el sector público, municipalidades y empresas privadas de Guatemala.',
@@ -78,8 +78,8 @@ export const ui = {
     hero: {
       since: (y: number) => `Desde ${y}`,
       title: 'Eficiencia desde el primer metro hasta el último.',
-      lead: 'Construimos carreteras, controlamos ríos y movemos tierra para el sector público, las municipalidades y la empresa privada.',
-      note: 'Siete líneas de trabajo con un mismo estándar: personal calificado, maquinaria propia y control estricto de cada etapa.',
+      lead: 'Pavimentamos carreteras, movemos tierra, excavamos sótanos y levantamos edificios para el sector público, las municipalidades y la empresa privada.',
+      note: 'Seis líneas de trabajo con un mismo estándar: personal calificado, maquinaria propia y control estricto de cada etapa.',
       code: 'GT-01',
       cta: 'Ver proyectos',
       photoAlt: `Maquinaria de ${site.brand} trabajando en una obra`,
@@ -95,12 +95,12 @@ export const ui = {
     about: {
       eyebrow: 'Nosotros',
       title: 'Una constructora guatemalteca con forma de trabajar propia.',
-      p1: `${site.name} es una empresa guatemalteca fundada el 13 de abril de 2000, dedicada a la construcción de obras de ingeniería civil. Desde su inicio, los fundadores tenían una idea clara de la empresa que establecerían: una constructora de carreteras con una visión y una forma de trabajar totalmente diferentes en el país, que buscara siempre la excelencia a través de personal altamente calificado y el equipo más moderno. Su actividad se ha orientado mayormente a la construcción de vialidad en el ámbito regional.`,
+      p1: 'Somos una empresa guatemalteca fundada el 28 de junio de 2000 y nos dedicamos a diversas ramas de la ingeniería civil. Con más de 25 años de experiencia, garantizamos a nuestros clientes la capacidad de desarrollar sus proyectos con la más alta calidad y responsabilidad, desde el primer metro de construcción hasta el último. Desde el inicio buscamos la excelencia a través de personal altamente calificado y el equipo más moderno.',
     },
     services: {
       eyebrow: 'Servicios',
-      title: 'Siete líneas de trabajo, un mismo estándar.',
-      lead: 'Desde el control de ríos hasta la urbanización, cada obra se ejecuta con personal calificado, maquinaria propia y control estricto de cada etapa.',
+      title: 'Seis líneas de trabajo, un mismo estándar.',
+      lead: 'Desde el diseño de pavimentos hasta el manejo de cuencas hídricas, cada obra se ejecuta con personal calificado, maquinaria propia y control estricto de cada etapa.',
       seeProjects: (n: number) => `Ver obras (${n})`,
       noProjects: 'Consúltenos',
       ctaTitle: '¿Su obra no aparece aquí?',
@@ -138,7 +138,10 @@ export const ui = {
       prev: 'Proyecto anterior',
       next: 'Proyecto siguiente',
       track: 'Proyectos destacados (desplazable)',
-      more: (name: string) => `Ver más proyectos de ${name}`,
+      more: (name: string) => `Ver fotos de ${name}`,
+      filterAria: 'Filtrar obras por tipo',
+      filterAll: 'Todas',
+      photos: (n: number) => (n === 1 ? '1 foto' : `${n} fotos`),
     },
     clients: {
       eyebrow: 'Clientes',
@@ -183,8 +186,8 @@ export const ui = {
     projectsPage: {
       eyebrow: 'Proyectos',
       title: 'Nuestras obras.',
-      lead: (n: number, pub: number, muni: number, priv: number) =>
-        `${n} proyectos para el sector público (${pub}), municipalidades (${muni}) y empresas privadas (${priv}).`,
+      lead: (n: number, withPhotos: number) =>
+        `${n} proyectos de pavimentación, movimiento de tierra, obra civil y manejo de cuencas; ${withPhotos} con fotografías.`,
       filterService: 'Tipo de obra',
       filterSector: 'Sector',
       all: 'Todos',
@@ -198,6 +201,8 @@ export const ui = {
       work: 'Obra',
       type: 'Tipo',
       listTitle: 'Lista de proyectos',
+      photosTitle: 'Obras con fotografías',
+      moreTitle: 'Más proyectos',
       filtersAria: 'Filtrar proyectos',
       note: 'Esta lista recoge una selección de los más de 200 proyectos completados.',
     },
@@ -207,6 +212,7 @@ export const ui = {
       lead: 'Ministerios, entidades de gobierno, municipalidades y empresas privadas de Guatemala.',
       cta: (n: number) => (n === 1 ? 'Ver 1 proyecto' : `Ver ${n} proyectos`),
     },
+    lightbox: { label: 'Fotos del proyecto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', open: (name: string) => `Ver fotos de ${name}` },
     footer: {
       rights: 'Todos los derechos reservados.',
       tagline: 'Construcción de obras de ingeniería civil en Guatemala.',
@@ -237,7 +243,7 @@ export const ui = {
     langSwitch: { label: 'Español', short: 'ES', aria: 'Ver esta página en español' },
     meta: {
       homeTitle: `${site.brand} | Civil engineering construction in Guatemala`,
-      homeDesc: `${site.name} (${site.brand}): paving, river control, earthworks, civil works and urban development in Guatemala since ${site.foundingDate.slice(0, 4)}.`,
+      homeDesc: `${site.name} (${site.brand}): paving, earthworks and basement excavation, civil works for housing and buildings, steel structures, structural design and watershed management in Guatemala since ${site.foundingDate.slice(0, 4)}.`,
       projectsTitle: `Projects | ${site.brand}`,
       projectsDesc:
         'Highways, streets, river control, earthworks and civil works for Guatemala’s public sector, municipalities and private companies.',
@@ -247,8 +253,8 @@ export const ui = {
     hero: {
       since: (y: number) => `Since ${y}`,
       title: 'Efficiency from the first meter to the last.',
-      lead: 'We build roads, control rivers and move earth for the public sector, municipalities and private companies.',
-      note: 'Seven lines of work, one standard: qualified people, our own machinery and strict control at every stage.',
+      lead: 'We pave roads, move earth, excavate basements and raise buildings for the public sector, municipalities and private companies.',
+      note: 'Six lines of work, one standard: qualified people, our own machinery and strict control at every stage.',
       code: 'GT-01',
       cta: 'See our projects',
       photoAlt: `${site.brand} machinery working on site`,
@@ -264,12 +270,12 @@ export const ui = {
     about: {
       eyebrow: 'About us',
       title: 'A Guatemalan builder with its own way of working.',
-      p1: `${site.name} is a Guatemalan company founded on April 13, 2000, dedicated to building civil engineering works. From the start, its founders had a clear idea of the company they wanted: a road builder with a vision and a way of working unlike any other in the country, always pursuing excellence through highly qualified people and the most modern equipment. Its work has focused mainly on road construction across the region.`,
+      p1: 'We are a Guatemalan company founded on June 28, 2000, working across many fields of civil engineering. With more than 25 years of experience, we guarantee our clients the capacity to deliver their projects with the highest quality and responsibility, from the first meter of construction to the last. From the start we have pursued excellence through highly qualified people and the most modern equipment.',
     },
     services: {
       eyebrow: 'Services',
-      title: 'Seven lines of work, one standard.',
-      lead: 'From river control to urban development, every project is delivered by qualified people, with our own machinery and strict control at every stage.',
+      title: 'Six lines of work, one standard.',
+      lead: 'From pavement design to watershed management, every project is delivered by qualified people, with our own machinery and strict control at every stage.',
       seeProjects: (n: number) => `See projects (${n})`,
       noProjects: 'Ask us',
       ctaTitle: 'Not seeing your project?',
@@ -307,7 +313,10 @@ export const ui = {
       prev: 'Previous project',
       next: 'Next project',
       track: 'Featured projects (scrollable)',
-      more: (name: string) => `See more projects for ${name}`,
+      more: (name: string) => `See photos of ${name}`,
+      filterAria: 'Filter projects by type',
+      filterAll: 'All',
+      photos: (n: number) => (n === 1 ? '1 photo' : `${n} photos`),
     },
     clients: {
       eyebrow: 'Clients',
@@ -352,8 +361,8 @@ export const ui = {
     projectsPage: {
       eyebrow: 'Projects',
       title: 'Our work.',
-      lead: (n: number, pub: number, muni: number, priv: number) =>
-        `${n} projects for the public sector (${pub}), municipalities (${muni}) and private companies (${priv}).`,
+      lead: (n: number, withPhotos: number) =>
+        `${n} paving, earthworks, civil works and watershed projects; ${withPhotos} with photos.`,
       filterService: 'Type of work',
       filterSector: 'Sector',
       all: 'All',
@@ -367,6 +376,8 @@ export const ui = {
       work: 'Project',
       type: 'Type',
       listTitle: 'Project list',
+      photosTitle: 'Projects with photos',
+      moreTitle: 'More projects',
       filtersAria: 'Filter projects',
       note: 'This list is a selection of our more than 200 completed projects.',
     },
@@ -376,6 +387,7 @@ export const ui = {
       lead: 'Ministries, government agencies, municipalities and private companies in Guatemala.',
       cta: (n: number) => (n === 1 ? 'See 1 project' : `See ${n} projects`),
     },
+    lightbox: { label: 'Project photos', close: 'Close', prev: 'Previous photo', next: 'Next photo', open: (name: string) => `See photos of ${name}` },
     footer: {
       rights: 'All rights reserved.',
       tagline: 'Civil engineering construction in Guatemala.',

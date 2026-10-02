@@ -18,21 +18,20 @@ La página de proyectos permite filtrar por tipo de obra, sector, cliente y bús
 
 ## 1. Fotos y logo
 
-No hace falta tocar código para las fotos: basta con copiar los archivos en estas carpetas.
-Mientras no haya fotos, se muestra un marcador gris con curvas de nivel y la etiqueta “Foto de obra”.
+Las fotos están en `src/assets/obras/` (`.jpg`, `.png` o `.webp`). Se optimizan solas al compilar (WebP en varios
+tamaños) y se muestran en blanco y negro, como en el diseño; al pasar el cursor o al abrirlas en el visor se ven a color.
 
-| Qué | Dónde | Notas |
-|---|---|---|
-| Fotos de obras | `src/assets/obras/` | `.jpg`, `.png` o `.webp`. Se ordenan por nombre: use `01-…`, `02-…`. |
-| Portada | primera foto de `src/assets/obras/`, o `src/assets/portada.jpg` si existe | Horizontal, de al menos 2000 px de ancho. |
-| Foto de “Cómo trabajamos” | siguiente foto de `src/assets/obras/` | Se muestra cuadrada. |
-| Fondo del llamado a la acción | la foto que sigue | Se oscurece automáticamente. |
-| Foto de un proyecto destacado | `src/assets/obras/` + `"photo": "archivo.jpg"` en ese proyecto de `src/data/projects.json` | Proporción ~3:2. |
-| Pies de foto (opcional) | `src/data/photos.json` | Por nombre de archivo: `{ "01-avenida-reforma.jpg": { "es": "…", "en": "…" } }` |
-| Logo | ya incluido (vectorizado) | El sitio usa el logotipo oficial CSG en vector. Copias para otros usos: `public/img/csg-logo.svg` (marca) y `public/img/csg-logo-completo.svg` (con la razón social en gris). |
+| Qué | Dónde se indica |
+|---|---|
+| Fotos de cada proyecto | `"photos": ["archivo-1.jpg", "archivo-2.jpg"]` en ese proyecto de `src/data/projects.json`. La primera es la portada de la tarjeta; todas se ven en el visor. |
+| Orden de los proyectos con fotos | `"featured": 1, 2, 3…` en `src/data/projects.json` (carrusel de inicio y página de proyectos). |
+| Portada, foto de “Cómo trabajamos” y fondo del llamado a la acción | `"photos": { "hero", "team", "cta" }` en `src/data/site.json`. |
+| Etiqueta de la tarjeta (p. ej. “Pavimento hidráulico”) y nombre corto | `"tag"` y `"short"` (en español e inglés) en el proyecto. |
+| Logo | Ya incluido (vectorizado). Copias para otros usos: `public/img/csg-logo.svg` (marca) y `public/img/csg-logo-completo.svg` (con la razón social en gris). |
 
-Las fotos se optimizan solas al compilar (WebP en varios tamaños) y se muestran en blanco y negro, como en el diseño.
-Para verlas a color, quite el `filter` de `.media img` en `src/styles/global.css`.
+Para agregar un proyecto nuevo con fotos: copie las fotos a `src/assets/obras/` y agregue el proyecto al final de
+`src/data/projects.json` con su `id`, `cats` (tipos de obra de `src/data/services.json`), textos `es`/`en` y `photos`.
+Si se conoce el cliente, use `"client"` (de `src/data/clients.json`) y la duración en `"months"`.
 
 ### Colores
 

@@ -1,0 +1,86 @@
+---
+import { getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import services from '../data/services.json';
+import clients from '../data/clients.json';
+import { photoByFile } from '../lib/media';
+import { formatDuration, t, type Lang } from '../i18n/ui';
+
+export type Project = {
+  id: number;
+  client?: string;
+  unit?: string;
+  sector?: string;
+  months?: number;
+  cats: string[];
+  tag?: { es: string; en: string };
+  short?: { es: string; en: string };
+  photos?: string[];
+  featured?: number;
+  es: string;
+  en: string;
+};
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  /** Atributos para los filtros de la página de proyectos. */
+  data?: Record<string, string>;
+  sizes?: string;
+}
+const { project: p, lang, data = {}, sizes = '(min-width: 860px) 40vw, 84vw' } = Astro.props;
+const s = t(lang);
+
+const client = p.client ? clients.find((c) => c.id === p.client) : undefined;
+const svcShort = (id: string) => services.find((x) => x.id === id)?.[lang].short;
+const tag = p.tag?.[lang] ?? svcShort(p.cats[0]) ?? '';
+const name = p.short?.[lang] ?? client?.name ?? p[lang];
+const photos = (p.photos ?? []).map(photoByFile).filter((x): x is NonNullable<typeof x> => Boolean(x));
+const cover = photos[0];
+
+// Versiones grandes para el visor de fotos (WebP, máx. 1800 px de ancho).
+const gallery = await Promise.all(
+  photos.map(async (ph) => {
+    const img = await getImage({ src: ph.src, width: Math.min(ph.src.width, 1800), format: 'webp', quality: 82 });
+    return { src: img.src, w: img.attributes.width ?? ph.src.width, h: img.attributes.height ?? ph.src.height };
+  }),
+);
+const meta = [
+  client?.name,
+  p.months ? formatDuration(p.months, lang) : undefined,
+  photos.length > 1 ? s.work.photos(photos.length) : undefined,
+].filter(Boolean);
+---
+<article class="fcard" {...data}>
+  {
+    cover ? (
+      <button
+        type="button"
+        class="fcard__media media"
+        data-gallery={JSON.stringify(gallery)}
+        data-title={p[lang]}
+        aria-label={s.lightbox.open(name)}
+      >
+        <Photo src={cover.src} alt={cover.caption?.[lang] ?? p[lang]} sizes={sizes} />
+        <span class="tag fcard__tag">{tag}</span>
+        <span class="fcard__client">{name}</span>
+        <span class="fcard__more" aria-hidden="true"><Icon name="plus" /></span>
+      </button>
+    ) : (
+      <div class="fcard__media media">
+        <Photo alt={p[lang]} label={s.work.photoPending} />
+        <span class="tag fcard__tag">{tag}</span>
+        <span class="fcard__client">{name}</span>
+      </div>
+    )
+  }
+  <div class="fcard__body">
+    <h3 class="fcard__title">{p[lang]}</h3>
+    {meta.length > 0 && (
+      <p class="fcard__meta label">
+        {meta.map((m, i) => <span>{i > 0 ? '· ' : ''}{m}</span>)}
+      </p>
+    )}
+  </div>
+</article>

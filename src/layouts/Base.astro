@@ -37,12 +37,14 @@ const org = {
   image: ogImage,
   logo: new URL('/apple-touch-icon.png', siteUrl).href,
   foundingDate: site.foundingDate,
+  taxID: site.taxId,
   email: site.email,
   telephone: site.phone,
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.street,
     addressLocality: site.address.city,
+    postalCode: site.address.postalCode,
     addressCountry: site.address.countryCode,
   },
   areaServed: { '@type': 'Country', name: 'Guatemala' },
@@ -98,6 +100,26 @@ const org = {
       </main>
       <Footer lang={lang} page={page} />
     </div>
+
+    <!-- Visor de fotos de proyectos -->
+    <dialog class="lightbox" aria-label={s.lightbox.label} data-lightbox>
+      <div class="lightbox__bar">
+        <p class="lightbox__title" data-lb-title></p>
+        <span class="label lightbox__count" data-lb-count></span>
+        <button class="btn btn--orange" type="button" data-lb-close>
+          {s.lightbox.close} <span class="menu__x" aria-hidden="true"></span>
+        </button>
+      </div>
+      <figure class="lightbox__stage">
+        <img data-lb-img alt="" />
+      </figure>
+      <button class="sq-btn lightbox__nav lightbox__nav--prev" type="button" data-lb-prev aria-label={s.lightbox.prev}>
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14.5 8h-12M7 3.5 2.5 8 7 12.5" /></svg>
+      </button>
+      <button class="sq-btn lightbox__nav lightbox__nav--next" type="button" data-lb-next aria-label={s.lightbox.next}>
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1.5 8h12M9 3.5 13.5 8 9 12.5" /></svg>
+      </button>
+    </dialog>
 
     <script>
       import '../scripts/main';

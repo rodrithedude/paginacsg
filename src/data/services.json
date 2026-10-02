@@ -1,100 +1,86 @@
 [
   {
-    "id": "fluvial",
-    "icon": "river",
-    "es": {
-      "title": "Control de márgenes fluviales",
-      "short": "Control fluvial",
-      "desc": "Dragados, bordas, muros y espigones para prevenir inundaciones y proteger comunidades e infraestructura."
-    },
-    "en": {
-      "title": "River control & flood protection",
-      "short": "River control",
-      "desc": "Dredging, levees, walls and groynes that prevent flooding and protect communities and infrastructure."
-    }
-  },
-  {
-    "id": "obra-civil",
-    "icon": "building",
-    "es": {
-      "title": "Obra civil",
-      "short": "Obra civil",
-      "desc": "Drenajes, introducción de agua potable, bodegas, complejos industriales e instalaciones deportivas."
-    },
-    "en": {
-      "title": "Civil works",
-      "short": "Civil works",
-      "desc": "Drainage, drinking-water systems, warehouses, industrial complexes and sports facilities."
-    }
-  },
-  {
     "id": "pavimentos",
     "icon": "road",
     "es": {
-      "title": "Pavimentos hidráulicos y asfálticos",
+      "title": "Diseño de pavimentos y pavimentaciones",
       "short": "Pavimentos",
-      "desc": "Pavimentación y rehabilitación de carreteras, calles, patios de maniobras y parqueos."
+      "desc": "Pavimentos asfálticos (en caliente y en frío) e hidráulicos para carreteras, calles, patios de maniobras y parqueos."
     },
     "en": {
-      "title": "Concrete & asphalt paving",
+      "title": "Pavement design & paving",
       "short": "Paving",
-      "desc": "Construction and rehabilitation of highways, streets, yards and parking areas."
+      "desc": "Asphalt (hot and cold mix) and concrete pavements for highways, streets, yards and parking areas."
     }
   },
   {
     "id": "tierra",
     "icon": "earth",
     "es": {
-      "title": "Movimientos de tierra",
+      "title": "Movimientos de tierra y excavación de sótanos",
       "short": "Movimiento de tierra",
-      "desc": "Apertura de brechas, conformación de subrasante, bases estabilizadas y balastrado de caminos."
+      "desc": "Apertura de brechas, conformación de subrasante, bases estabilizadas y excavación de sótanos para edificios y centros comerciales."
     },
     "en": {
-      "title": "Earthworks",
+      "title": "Earthworks & basement excavation",
       "short": "Earthworks",
-      "desc": "Pioneer roads, subgrade shaping, stabilized bases and road gravelling."
+      "desc": "Pioneer roads, subgrade shaping, stabilized bases and basement excavation for buildings and shopping centers."
     }
   },
   {
-    "id": "hidroelectricas",
-    "icon": "dam",
+    "id": "obra-civil",
+    "icon": "building",
     "es": {
-      "title": "Hidroeléctricas",
-      "short": "Hidroeléctricas",
-      "desc": "Obra civil para proyectos de generación hidroeléctrica."
+      "title": "Obra civil para vivienda y edificios",
+      "short": "Obra civil",
+      "desc": "Viviendas, edificios e instalaciones, con sus drenajes, agua potable y obras complementarias."
     },
     "en": {
-      "title": "Hydroelectric projects",
-      "short": "Hydroelectric",
-      "desc": "Civil works for hydroelectric power projects."
+      "title": "Civil works for housing & buildings",
+      "short": "Civil works",
+      "desc": "Homes, buildings and facilities, including drainage, drinking water and associated works."
     }
   },
   {
-    "id": "planificacion",
-    "icon": "plan",
+    "id": "estructuras",
+    "icon": "steel",
     "es": {
-      "title": "Planificación y dirección de proyectos",
-      "short": "Planificación y dirección",
-      "desc": "Planificación, dirección y control de obras de principio a fin."
+      "title": "Estructuras metálicas",
+      "short": "Estructuras metálicas",
+      "desc": "Fabricación y montaje de estructuras metálicas para todo tipo de edificación."
     },
     "en": {
-      "title": "Project planning & management",
-      "short": "Planning & management",
-      "desc": "Planning, management and control of construction projects from start to finish."
+      "title": "Steel structures",
+      "short": "Steel structures",
+      "desc": "Fabrication and erection of steel structures for all types of buildings."
     }
   },
   {
-    "id": "urbanizacion",
-    "icon": "houses",
+    "id": "diseno-estructural",
+    "icon": "structure",
     "es": {
-      "title": "Urbanización",
-      "short": "Urbanización",
-      "desc": "Calles, drenajes y servicios para desarrollos residenciales."
+      "title": "Diseño estructural",
+      "short": "Diseño estructural",
+      "desc": "Cálculo y diseño estructural de edificaciones y obras civiles."
     },
     "en": {
-      "title": "Urban development",
-      "short": "Urban development",
-      "desc": "Streets, drainage and utilities for residential developments."
+      "title": "Structural design",
+      "short": "Structural design",
+      "desc": "Structural analysis and design for buildings and civil works."
+    }
+  },
+  {
+    "id": "cuencas",
+    "icon": "river",
+    "es": {
+      "title": "Diseños hidráulicos y manejo de cuencas hídricas",
+      "short": "Cuencas hídricas",
+      "desc": "Diseño hidráulico, drenajes y control de ríos: dragados, bordas, muros y espigones para prevenir inundaciones."
+    },
+    "en": {
+      "title": "Hydraulic design & watershed management",
+      "short": "Watersheds",
+      "desc": "Hydraulic design, drainage and river control: dredging, levees, walls and groynes to prevent flooding."
     }
   }
 ]

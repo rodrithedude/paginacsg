@@ -2,13 +2,14 @@
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import Photo from './Photo.astro';
+import PhotoCard, { type Project } from './PhotoCard.astro';
 import site from '../data/site.json';
 import services from '../data/services.json';
 import projects from '../data/projects.json';
 import clients from '../data/clients.json';
-import { heroImage, secondaryPhoto, photoByFile } from '../lib/media';
+import { heroImage, teamPhoto, ctaPhoto } from '../lib/media';
 import { navFor } from '../lib/nav';
-import { anchors, formatDuration, routes, t, yearsSince, foundingYear, type Lang } from '../i18n/ui';
+import { anchors, routes, t, yearsSince, foundingYear, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -22,13 +23,15 @@ const params = lang === 'es' ? { svc: 'servicio', client: 'cliente' } : { svc: '
 
 const years = yearsSince(site.foundingDate);
 const countFor = (id: string) => projects.filter((p) => p.cats.includes(id)).length;
-const clientOf = (id: string) => clients.find((c) => c.id === id);
-const svcShort = (id: string) => services.find((x) => x.id === id)?.[lang].short ?? id;
 
-type Project = (typeof projects)[number] & { featured?: number; photo?: string; unit?: string };
+// Carrusel: proyectos con fotos, en el orden de "featured".
 const featured = (projects as Project[])
-  .filter((p) => typeof p.featured === 'number')
-  .sort((a, b) => (a.featured ?? 0) - (b.featured ?? 0));
+  .filter((p) => p.photos?.length)
+  .sort((a, b) => (a.featured ?? 999) - (b.featured ?? 999) || a.id - b.id);
+// Tipos de obra con fotos, para filtrar el carrusel.
+const workFilters = services
+  .map((svc) => ({ id: svc.id, label: svc[lang].short, n: featured.filter((p) => p.cats.includes(svc.id)).length }))
+  .filter((f) => f.n > 0);
 
 const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
   id: sec,
@@ -36,8 +39,6 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
   items: clients.filter((c) => c.sector === sec),
 }));
 
-const teamPhoto = secondaryPhoto(0);
-const ctaPhoto = secondaryPhoto(1);
 ---
 <!-- ============ PORTADA ============ -->
 <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -232,38 +233,15 @@ const ctaPhoto = secondaryPhoto(1);
     <a class="btn btn--orange" href={projectsUrl}>{s.work.all(projects.length)} <Icon name="arrow" class="btn__icon" /></a>
   </div>
 
+  <div class="chips work__filters" role="group" aria-label={s.work.filterAria}>
+    <button type="button" class="chip" data-work-filter="" aria-pressed="true">{s.work.filterAll} <span class="count">{featured.length}</span></button>
+    {workFilters.map((f) => (
+      <button type="button" class="chip" data-work-filter={f.id} aria-pressed="false">{f.label} <span class="count">{f.n}</span></button>
+    ))}
+  </div>
+
   <div class="work__track" data-carousel-track tabindex="0" role="region" aria-label={s.work.track}>
-    {
-      featured.map((p) => {
-        const client = clientOf(p.client);
-        const name = client?.name ?? p.client;
-        const photo = photoByFile(p.photo);
-        return (
-          <article class="fcard">
-            <div class="fcard__media media">
-              <Photo
-                src={photo?.src}
-                alt={photo?.caption?.[lang] ?? p[lang]}
-                sizes="(min-width: 860px) 40vw, 84vw"
-                label={photo ? undefined : s.work.photoPending}
-              />
-              <span class="tag fcard__tag">{svcShort(p.cats[0])}</span>
-              <p class="fcard__client">{name}</p>
-              <a class="fcard__more" href={`${projectsUrl}?${params.client}=${p.client}`} aria-label={s.work.more(name)}>
-                <Icon name="plus" />
-              </a>
-            </div>
-            <div class="fcard__body">
-              <h3 class="fcard__title">{p[lang]}</h3>
-              <p class="fcard__meta label">
-                <span>{formatDuration(p.months, lang)}</span>
-                {p.cats.map((c) => <span>· {svcShort(c)}</span>)}
-              </p>
-            </div>
-          </article>
-        );
-      })
-    }
+    {featured.map((p) => <PhotoCard project={p} lang={lang} data={{ 'data-cats': p.cats.join(' ') }} />)}
   </div>
 
   <div class="work__controls">

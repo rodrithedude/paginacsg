@@ -2,12 +2,13 @@
   "brand": "CSG",
   "name": "Construcciones y Servicios Globales",
   "legalName": "Construcciones y Servicios Globales, S.A.",
+  "taxId": "2431600-8",
   "logoLines": [
     "Construcciones",
     "y Servicios",
     "Globales, S.A."
   ],
-  "foundingDate": "2000-04-13",
+  "foundingDate": "2000-06-28",
   "phone": "+502 2361-5432",
   "phoneHref": "tel:+50223615432",
   "email": "info@padico.com",
@@ -16,11 +17,17 @@
     "street": "Av. Las Américas 11-24, zona 13",
     "city": "Ciudad de Guatemala",
     "country": "Guatemala",
-    "countryCode": "GT"
+    "countryCode": "GT",
+    "postalCode": "01013"
   },
   "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Av.+Las+Am%C3%A9ricas+11-24+zona+13+Ciudad+de+Guatemala",
   "stats": {
     "projects": 200,
     "employees": 400
+  },
+  "photos": {
+    "hero": "cabanas-san-diego-2.jpg",
+    "team": "casa-asuncion-sur-1.jpg",
+    "cta": "edificio-vent14-1.jpg"
   }
 }

@@ -106,7 +106,8 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
   const prev = root.querySelector<HTMLButtonElement>('[data-carousel-prev]');
   const next = root.querySelector<HTMLButtonElement>('[data-carousel-next]');
   if (!track || !prev || !next) return;
-  const step = () => track.firstElementChild?.getBoundingClientRect().width || track.clientWidth;
+  const step = () =>
+    track.querySelector<HTMLElement>(':scope > :not([hidden])')?.getBoundingClientRect().width || track.clientWidth;
   const update = () => {
     const max = track.scrollWidth - track.clientWidth - 2;
     prev.disabled = track.scrollLeft <= 2;
@@ -119,6 +120,78 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
   window.addEventListener('resize', update);
   update();
 });
+
+/* ---------- Filtro por tipo de obra en el carrusel de inicio ---------- */
+document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+  const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-work-filter]')];
+  const track = root.querySelector<HTMLElement>('[data-carousel-track]');
+  if (!chips.length || !track) return;
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const cat = chip.dataset.workFilter || '';
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      track.querySelectorAll<HTMLElement>('.fcard').forEach((card) => {
+        card.hidden = Boolean(cat) && !(card.dataset.cats || '').split(' ').includes(cat);
+      });
+      track.scrollLeft = 0;
+      track.dispatchEvent(new Event('scroll'));
+    }),
+  );
+});
+
+/* ---------- Visor de fotos ---------- */
+const lightbox = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+if (lightbox) {
+  type Shot = { src: string; w: number; h: number };
+  let shots: Shot[] = [];
+  let index = 0;
+  let title = '';
+  let opener: HTMLElement | null = null;
+  const img = lightbox.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const count = lightbox.querySelector<HTMLElement>('[data-lb-count]')!;
+  const titleEl = lightbox.querySelector<HTMLElement>('[data-lb-title]')!;
+  const prevBtn = lightbox.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+  const nextBtn = lightbox.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+
+  const show = (i: number) => {
+    index = (i + shots.length) % shots.length;
+    const shot = shots[index];
+    img.src = shot.src;
+    img.width = shot.w;
+    img.height = shot.h;
+    img.alt = `${title} (${index + 1}/${shots.length})`;
+    count.textContent = shots.length > 1 ? `${index + 1} / ${shots.length}` : '';
+    prevBtn.hidden = nextBtn.hidden = shots.length < 2;
+  };
+
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-gallery]');
+    if (!btn) return;
+    shots = JSON.parse(btn.dataset.gallery || '[]');
+    if (!shots.length) return;
+    title = btn.dataset.title || '';
+    titleEl.textContent = title;
+    opener = btn;
+    show(0);
+    lightbox.showModal();
+    document.body.classList.add('menu-open');
+  });
+  prevBtn.addEventListener('click', () => show(index - 1));
+  nextBtn.addEventListener('click', () => show(index + 1));
+  lightbox.querySelector('[data-lb-close]')?.addEventListener('click', () => lightbox.close());
+  // Cerrar al tocar fuera de la foto
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.close();
+  });
+  lightbox.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && shots.length > 1) show(index - 1);
+    if (e.key === 'ArrowRight' && shots.length > 1) show(index + 1);
+  });
+  lightbox.addEventListener('close', () => {
+    document.body.classList.remove('menu-open');
+    opener?.focus({ preventScroll: true });
+  });
+}
 
 /* ---------- Contadores y aparición al hacer scroll ---------- */
 const runCounter = (el: HTMLElement) => {

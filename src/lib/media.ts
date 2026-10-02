@@ -1,13 +1,12 @@
 import type { ImageMetadata } from 'astro';
 import captions from '../data/photos.json';
+import site from '../data/site.json';
 
 /**
- * Fotos de obras: basta con copiar archivos .jpg/.png/.webp a src/assets/obras/
- * y aparecen solas en el sitio, en orden alfabético (01-…, 02-…, etc.).
- * - La primera es la portada (salvo que exista src/assets/portada.jpg).
- * - Las siguientes se usan en "Cómo trabajamos" y en el fondo del llamado a la acción.
- * - Para mostrar una foto en la tarjeta de un proyecto, agregue "photo": "nombre.jpg"
- *   a ese proyecto en src/data/projects.json.
+ * Fotos de obras: se copian a src/assets/obras/ (.jpg, .png o .webp).
+ * - Las fotos de cada proyecto se indican en src/data/projects.json ("photos": [...]).
+ * - La portada, la foto de "Cómo trabajamos" y el fondo del llamado a la acción se eligen
+ *   en src/data/site.json ("photos": { "hero", "team", "cta" }).
  * Pies de foto opcionales en src/data/photos.json (por nombre de archivo).
  */
 const obras = import.meta.glob<{ default: ImageMetadata }>('../assets/obras/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG}', {
@@ -35,20 +34,15 @@ export const photos: Photo[] = Object.entries(obras)
   });
 
 const portadaImage = Object.values(portada)[0]?.default;
-
-export const heroImage: ImageMetadata | undefined = portadaImage ?? photos[0]?.src ?? undefined;
+const picks = (site as { photos?: Record<string, string> }).photos ?? {};
 
 export const logo: ImageMetadata | undefined = Object.values(logos)[0]?.default;
 
-/** Fotos que no son la portada, para las secciones secundarias. */
-const secondary = portadaImage ? photos : photos.slice(1);
-
-/** Foto secundaria n.º i (o undefined si no hay suficientes). */
-export function secondaryPhoto(i: number): Photo | undefined {
-  return secondary[i];
-}
-
-/** Foto por nombre de archivo (para los proyectos con "photo"). */
+/** Foto por nombre de archivo. */
 export function photoByFile(file?: string): Photo | undefined {
   return file ? photos.find((p) => p.file === file) : undefined;
 }
+
+export const heroImage: ImageMetadata | undefined = portadaImage ?? photoByFile(picks.hero)?.src ?? photos[0]?.src;
+export const teamPhoto: Photo | undefined = photoByFile(picks.team);
+export const ctaPhoto: Photo | undefined = photoByFile(picks.cta);

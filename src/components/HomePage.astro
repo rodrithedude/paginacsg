@@ -59,7 +59,7 @@ const sectors = (['publico', 'municipal', 'privado'] as const).map((sec) => ({
     </div>
   </div>
 
-  <div class="hero__media media">
+  <div class="hero__media media" style={`--focus-pos: ${site.photos.heroFocus ?? '50% 50%'}`}>
     <Photo
       src={heroImage}
       alt={s.hero.photoAlt}

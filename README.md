@@ -25,7 +25,7 @@ tamaños) y se muestran en blanco y negro, como en el diseño; al pasar el curso
 |---|---|
 | Fotos de cada proyecto | `"photos": ["archivo-1.jpg", "archivo-2.jpg"]` en ese proyecto de `src/data/projects.json`. La primera es la portada de la tarjeta; todas se ven en el visor. |
 | Orden de los proyectos con fotos | `"featured": 1, 2, 3…` en `src/data/projects.json` (carrusel de inicio y página de proyectos). |
-| Portada, foto de “Cómo trabajamos” y fondo del llamado a la acción | `"photos": { "hero", "team", "cta" }` en `src/data/site.json`. |
+| Portada, foto de “Cómo trabajamos” y fondo del llamado a la acción | `"photos": { "hero", "team", "cta" }` en `src/data/site.json`. `"heroFocus"` indica qué parte de la portada se mantiene visible al recortarla (`"50% 18%"` = centrada y cerca de arriba). |
 | Etiqueta de la tarjeta (p. ej. “Pavimento hidráulico”) y nombre corto | `"tag"` y `"short"` (en español e inglés) en el proyecto. |
 | Logo | Ya incluido (vectorizado). Copias para otros usos: `public/img/csg-logo.svg` (marca) y `public/img/csg-logo-completo.svg` (con la razón social en gris). |
 

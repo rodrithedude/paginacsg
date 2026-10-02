@@ -373,6 +373,7 @@ body.menu-open { overflow: hidden; }
 .hero__right { grid-column: 2; grid-row: 1; justify-self: end; margin-right: var(--g); display: flex; gap: 6px; }
 
 .hero__media { grid-column: 1 / -1; grid-row: 1 / 3; }
+.hero__media img { object-position: var(--focus-pos, 50% 50%); }
 .hero__rule-h, .hero__rule-v { z-index: 1; pointer-events: none; }
 .hero__rule-h { grid-column: 1 / -1; grid-row: 1; border-bottom: 1px solid rgba(255, 255, 255, .5); }
 .hero__rule-v { grid-column: 1; grid-row: 1 / 3; border-right: 1px solid rgba(255, 255, 255, .5); }

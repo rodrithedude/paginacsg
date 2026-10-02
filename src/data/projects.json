@@ -186,7 +186,7 @@
     "en": "El Naranjo – Minervas connector road, Mixco, Guatemala" },
   { "id": 58, "sector": "privado", "cats": ["tierra"], "tag": {"es": "Excavación de sótanos", "en": "Basement excavation"}, "featured": 4,
     "short": {"es": "Centro Comercial Blue", "en": "Blue shopping center"},
-    "photos": ["centro-comercial-blue-1.jpg", "centro-comercial-blue-2.jpg"],
+    "photos": ["centro-comercial-blue-2.jpg", "centro-comercial-blue-1.jpg"],
     "es": "Centro Comercial Blue, San Cristóbal, Mixco, Guatemala",
     "en": "Blue shopping center, San Cristóbal, Mixco, Guatemala" },
   { "id": 59, "sector": "privado", "cats": ["tierra"], "tag": {"es": "Excavación de sótanos", "en": "Basement excavation"}, "featured": 11,

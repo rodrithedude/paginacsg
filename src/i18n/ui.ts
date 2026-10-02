@@ -29,24 +29,6 @@ export function yearsSince(isoDate: string, now = new Date()): number {
 
 export const foundingYear = Number(site.foundingDate.slice(0, 4));
 
-export function formatDuration(months: number, lang: Lang): string {
-  const whole = Math.floor(months);
-  const half = months - whole >= 0.5;
-  const y = Math.floor(whole / 12);
-  const m = whole % 12;
-  const L =
-    lang === 'es'
-      ? { y1: 'año', yN: 'años', m1: 'mes', mN: 'meses' }
-      : { y1: 'year', yN: 'years', m1: 'month', mN: 'months' };
-  const parts: string[] = [];
-  if (y) parts.push(`${y} ${y === 1 ? L.y1 : L.yN}`);
-  if (m || half) {
-    const label = m === 1 && !half ? L.m1 : L.mN;
-    parts.push(`${m}${half ? '½' : ''} ${label}`);
-  }
-  return parts.join(lang === 'es' ? ' y ' : ' ');
-}
-
 export const ui = {
   es: {
     locale: 'es-GT',
@@ -196,7 +178,6 @@ export const ui = {
       showing: (a: number, b: number) => `Mostrando ${a} de ${b} proyectos`,
       none: 'No hay proyectos con esos filtros.',
       reset: 'Quitar filtros',
-      duration: 'Duración',
       client: 'Cliente',
       work: 'Obra',
       type: 'Tipo',
@@ -371,7 +352,6 @@ export const ui = {
       showing: (a: number, b: number) => `Showing ${a} of ${b} projects`,
       none: 'No projects match those filters.',
       reset: 'Clear filters',
-      duration: 'Duration',
       client: 'Client',
       work: 'Project',
       type: 'Type',

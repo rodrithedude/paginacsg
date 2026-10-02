@@ -31,7 +31,7 @@ tamaños) y se muestran en blanco y negro, como en el diseño; al pasar el curso
 
 Para agregar un proyecto nuevo con fotos: copie las fotos a `src/assets/obras/` y agregue el proyecto al final de
 `src/data/projects.json` con su `id`, `cats` (tipos de obra de `src/data/services.json`), textos `es`/`en` y `photos`.
-Si se conoce el cliente, use `"client"` (de `src/data/clients.json`) y la duración en `"months"`.
+Si se conoce el cliente, use `"client"` (de `src/data/clients.json`). La duración (`"months"`) no se muestra en el sitio; solo ordena la lista de proyectos sin fotos (los más largos primero).
 
 ### Colores
 
@@ -44,7 +44,7 @@ Están definidos al inicio de `src/styles/global.css`.
 | Qué | Archivo |
 |---|---|
 | Nombre, teléfono, correo, dirección, fecha de fundación, cifras | `src/data/site.json` |
-| Proyectos (cliente, descripción ES/EN, duración en meses, tipo de obra) | `src/data/projects.json` |
+| Proyectos (cliente, descripción ES/EN, tipo de obra, fotos) | `src/data/projects.json` |
 | Proyectos del carrusel de inicio | `"featured": 1, 2, 3…` en `src/data/projects.json` (el número es el orden) |
 | Clientes y sector | `src/data/clients.json` |
 | Servicios | `src/data/services.json` |

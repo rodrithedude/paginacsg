@@ -4,7 +4,7 @@ import PhotoCard, { type Project } from './PhotoCard.astro';
 import services from '../data/services.json';
 import projects from '../data/projects.json';
 import clients from '../data/clients.json';
-import { formatDuration, routes, t, type Lang } from '../i18n/ui';
+import { routes, t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -156,14 +156,6 @@ const rows = sorted.map((p) => {
               </p>
             )}
           </div>
-          <dl class="prow__dur">
-            {p.months && (
-              <>
-                <dt class="label">{P.duration}</dt>
-                <dd class="mono">{formatDuration(p.months, lang)}</dd>
-              </>
-            )}
-          </dl>
           <p class="prow__tags">
             <span class="sr-only">{P.type}: </span>
             {cats.map((c) => (
